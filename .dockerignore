@@ -1,0 +1,17 @@
+.git
+.github
+.gitignore
+README.md
+
+log
+test
+vendor
+openshift/
+coverage/
+.bundle
+.ruby-version
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
