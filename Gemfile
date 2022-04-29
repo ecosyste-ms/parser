@@ -18,6 +18,7 @@ gem "faraday-gzip"
 gem "faraday-follow_redirects"
 gem "sidekiq"
 gem "sidekiq-unique-jobs"
+gem 'sidekiq-status'
 gem "bibliothecary"
 gem "pghero"
 gem "pg_query"
