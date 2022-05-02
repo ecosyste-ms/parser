@@ -1,8 +1,7 @@
 class Api::V1::JobsController < Api::V1::ApplicationController
   def create
-    # create job from params, return with json 
-    @job = Job.new(url: params[:url], status: 'pending')
-    if @job.save!
+    @job = Job.new(url: params[:url], status: 'pending', ip: request.remote_ip)
+    if @job.save
       if @job.fast_parse?
         @job.parse_dependencies
       else
