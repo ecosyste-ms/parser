@@ -4,6 +4,7 @@ class Job < ApplicationRecord
 
   def check_status
     return if sidekiq_id.blank?
+    return if status: 'complete'
     update(status: Sidekiq::Status.status(sidekiq_id))
   end
 
