@@ -20,6 +20,9 @@ class ApiV1JobsControllerTest < ActionDispatch::IntegrationTest
   test 'check on a job' do
     @job = Job.create(url: 'https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip')
 
+    @job.expects(:check_status)
+    Job.expects(:find).with(@job.id).returns(@job)
+
     get api_v1_job_path(id: @job.id)
     assert_response :success
     assert_template 'jobs/show', file: 'jobs/show.json.jbuilder'
