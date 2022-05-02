@@ -1,0 +1,11 @@
+<div class="col-lg-4 container-sm text-center">
+  <form class="row g-2 justify-content-center" action='<%= api_v1_jobs_path %>' method="post">
+    <div class="col-auto">
+      <label for="repo_name" class="visually-hidden">Tarball URL</label>
+      <input name='url' type="text" class="form-control" id="repo_name" placeholder="URL: eg https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip" size="50">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary mb-3">Parse</button>
+    </div>
+  </form>
+</div>
