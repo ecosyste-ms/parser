@@ -9,7 +9,11 @@ class Api::V1::JobsController < Api::V1::ApplicationController
       end
       redirect_to api_v1_job_path(@job)
     else
-      # validation error
+      error = {
+        title: "Bad Request",
+        details: @job.errors.full_messages
+      }
+      render json: error, status: 400
     end
   end
 
