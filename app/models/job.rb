@@ -18,33 +18,6 @@ class Job < ApplicationRecord
     return true if single_parsable_file? 
   end
 
-  def single_parsable_file?
-    Bibliothecary.identify_manifests([basename]).any?
-  end
-
-  def basename
-    File.basename(url)
-  end
-
-  def download(path)
-    downloaded_file = File.open(path, "wb")
-
-    request = Typhoeus::Request.new(url, followlocation: true)
-    request.on_headers do |response|
-      return nil if response.code != 200
-    end
-    request.on_body { |chunk| downloaded_file.write(chunk) }
-    request.on_complete { downloaded_file.close }
-    request.run
-  end
-
-  def mime_type(path)
-    IO.popen(
-      ["file", "--brief", "--mime-type", path],
-      in: :close, err: :close
-    ) { |io| io.read.chomp }
-  end
-
   def parse_dependencies
     begin
       Dir.mktmpdir do |dir|
@@ -67,12 +40,41 @@ class Job < ApplicationRecord
           results = []
         end
         # TODO change platform to ecosystem
-        update!(results: results)
+        update!(results: results, status: 'complete')
       end
 
     rescue
       # TODO record error
-      update!(results: [])
+      update!(results: [], status: 'error')
     end
+  end
+
+  private
+
+  def download(path)
+    downloaded_file = File.open(path, "wb")
+
+    request = Typhoeus::Request.new(url, followlocation: true)
+    request.on_headers do |response|
+      return nil if response.code != 200
+    end
+    request.on_body { |chunk| downloaded_file.write(chunk) }
+    request.on_complete { downloaded_file.close }
+    request.run
+  end
+
+  def mime_type(path)
+    IO.popen(
+      ["file", "--brief", "--mime-type", path],
+      in: :close, err: :close
+    ) { |io| io.read.chomp }
+  end
+
+  def single_parsable_file?
+    Bibliothecary.identify_manifests([basename]).any?
+  end
+
+  def basename
+    File.basename(url)
   end
 end

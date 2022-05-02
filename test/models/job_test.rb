@@ -6,27 +6,40 @@ class JobTest < ActiveSupport::TestCase
     should validate_uniqueness_of(:id).case_insensitive
   end
 
+  setup do
+    @job = Job.create(url: 'https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip', sidekiq_id: '123', ip: '123.456.78.9')
+  end
+
   test 'check_status' do
-    @job = Job.new(url: 'https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip', sidekiq_id: '123')
     Sidekiq::Status.expects(:status).with(@job.sidekiq_id).returns(:queued)
     @job.check_status
     assert_equal @job.status, "queued"
   end
 
   test 'parse_dependencies_async' do
-    # TODO
+    ParseDependenciesWorker.expects(:perform_async).with(@job.id)
+    @job.parse_dependencies_async
   end
 
   test 'parse_dependencies' do
     # TODO
   end
 
-  test 'fast_parse?' do
-    # TODO
-  end
+  context 'fast_parse?' do
+    should 'quickly parse a json file' do
+      @job.url = 'https://raw.githubusercontent.com/ecosyste-ms/digest/main/package.json'
+      assert @job.fast_parse?
+    end
+  
+    should 'quickly parse a Gemfile' do
+      @job.url = 'https://raw.githubusercontent.com/ecosyste-ms/parser/main/Gemfile'
+      assert @job.fast_parse?
+    end
 
-  test 'single_parsable_file?' do
-    # TODO
+    should 'not quickly parse a zip file' do
+      @job.url = 'https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip'
+      refute @job.fast_parse?
+    end
   end
 
   test 'basename' do
