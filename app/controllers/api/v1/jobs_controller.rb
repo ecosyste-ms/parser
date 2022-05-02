@@ -19,5 +19,6 @@ class Api::V1::JobsController < Api::V1::ApplicationController
 
   def show
     @job = Job.find(params[:id])
+    @job.check_status
   end
 end
