@@ -96,4 +96,148 @@ class Job < ApplicationRecord
   def basename
     File.basename(url)
   end
+
+  def self.formats
+    {
+      bower: [
+        "bower.json"
+      ],
+      cargo: [
+        "Cargo.toml",
+        "Cargo.lock"
+      ],
+      carthage: [
+        "Cartfile",
+        "Cartfile.private",
+        "Cartfile.resolved"
+      ],
+      clojars: [
+        "project.clj"
+      ],
+      cocoapods: [
+        "Podfile",
+        "Podfile.lock",
+        "*.podspec",
+        "*.podspec.json"
+      ],
+      conda: [
+        "environment.yml",
+        "environment.yaml",
+        "environment.yml.lock",
+        "environment.yaml.lock"
+      ],
+      cpan: [
+        "META.json",
+        "META.yml"
+      ],
+      cran: [
+        "DESCRIPTION"
+      ],
+      cyclonedx: [
+        "cyclonedx.xml",
+        "cyclonedx.json"
+      ],
+      dub: [
+        "dub.json",
+        "dub.sdl"
+      ],
+      elm: [
+        "elm-package.json",
+        "elm_dependencies.json",
+        "elm-stuff/exact-dependencies.json"
+      ],
+      go: [
+        "glide.yaml",
+        "glide.lock",
+        "Godeps",
+        "Godeps/Godeps.json",
+        "vendor/manifest",
+        "vendor/vendor.json",
+        "Gopkg.toml",
+        "Gopkg.lock",
+        "go.mod",
+        "go.sum",
+        "go-resolved-dependencies.json"
+      ],
+      hackage: [
+        "*.cabal",
+        "cabal.config"
+      ],
+      haxelib: [
+        "haxelib.json"
+      ],
+      hex: [
+        "mix.exs",
+        "mix.lock"
+      ],
+      julia: [
+        "REQUIRE"
+      ],
+      maven: [
+        "pom.xml",
+        "ivy.xml",
+        "build.gradle",
+        "build.gradle.kts",
+        "gradle-dependencies-q.txt",
+        "maven-resolved-dependencies.txt",
+        "sbt-update-full.txt",
+        "maven-dependency-tree.txt"
+      ],
+      meteor: [
+        "versions.json"
+      ],
+      npm: [
+        "package.json",
+        "package-lock.json",
+        "npm-shrinkwrap.json",
+        "yarn.lock",
+        "npm-ls.json"
+      ],
+      nuget: [
+        "packages.config",
+        "packages.lock.json",
+        "Project.json",
+        "Project.lock.json",
+        "*.nuspec",
+        "paket.lock",
+        "*.csproj",
+        "project.assets.json"
+      ],
+      packagist: [
+        "composer.json",
+        "composer.lock"
+      ],
+      pub: [
+        "pubspec.yaml",
+        "pubspec.lock"
+      ],
+      pypi: [
+        "setup.py",
+        "req*.txt",
+        "req*.pip",
+        "requirements/*.txt",
+        "requirements/*.pip",
+        "requirements.frozen",
+        "pip-resolved-dependencies.txt",
+        "Pipfile",
+        "Pipfile.lock",
+        "pyproject.toml",
+        "poetry.lock"
+      ],
+      rubygems: [
+        "Gemfile",
+        "Gemfile.lock",
+        "gems.rb",
+        "gems.locked",
+        "*.gemspec"
+      ],
+      shards: [
+        "shard.yml",
+        "shard.lock"
+      ],
+      swift: [
+        "Package.swift"
+      ]
+    }
+  end
 end

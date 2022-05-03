@@ -9,3 +9,28 @@
     </div>
   </form>
 </div>
+
+<div class="container-sm col-lg-6 mt-4">
+  <h4 class='mb-3'>Supported ecosystems and file formats:</h4>
+  <% @formats.each do |ecosystem, files| %>
+    <div class="card mb-3 registry d-flex">
+      <div class="card-body pb-1">
+        <div class="d-flex">
+          
+          <div class="flex-grow-1 ms-3 text-break">
+            <h5 class='card-title'>
+              <%= ecosystem %>
+            </h5>
+          
+            <p class="card-subtitle mb-2 text-muted">
+              <%= files.to_sentence %>
+            </p>
+          </div>
+          <div class="flex-shrink-0">
+           
+          </div>  
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

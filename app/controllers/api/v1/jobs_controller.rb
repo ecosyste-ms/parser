@@ -17,4 +17,8 @@ class Api::V1::JobsController < Api::V1::ApplicationController
     @job = Job.find(params[:id])
     @job.check_status
   end
+
+  def formats
+    render json: Job.formats
+  end
 end
