@@ -12,6 +12,14 @@ class Job < ApplicationRecord
     ['complete', 'error'].include?(status)
   end
 
+  def start_dependency_parsing
+    if fast_parse?
+      perform_dependency_parsing
+    else
+      parse_dependencies_async
+    end
+  end
+
   def parse_dependencies_async
     sidekiq_id = ParseDependenciesWorker.perform_async(id)
     update(sidekiq_id: sidekiq_id)
@@ -25,9 +33,9 @@ class Job < ApplicationRecord
   def perform_dependency_parsing
     begin
       Dir.mktmpdir do |dir|
-        download_file(dir)
+        sha256 = download_file(dir)
         results = parse_dependencies(dir)
-        update!(results: results, status: 'complete')
+        update!(results: results, status: 'complete', sha256: sha256)
       end
     rescue => e
       update(results: {error: e.inspect}, status: 'error')
@@ -66,6 +74,8 @@ class Job < ApplicationRecord
     request.on_body { |chunk| downloaded_file.write(chunk) }
     request.on_complete { downloaded_file.close }
     request.run
+
+    return Digest::SHA256.hexdigest File.read(path)
   end
 
   def mime_type(path)

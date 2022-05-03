@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_29_124152) do
     t.string "status"
     t.string "url"
     t.string "ip"
+    t.string "sha256"
     t.json "results", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

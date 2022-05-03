@@ -7,6 +7,7 @@ class CreateJobs < ActiveRecord::Migration[7.0]
       t.string :status
       t.string :url
       t.string :ip
+      t.string :sha256
       t.json :results, default: {}
 
       t.timestamps

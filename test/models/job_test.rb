@@ -54,6 +54,16 @@ class JobTest < ActiveSupport::TestCase
     end
   end
 
+  test 'download_file' do
+    stub_request(:get, "https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip")
+      .to_return({ status: 200, body: file_fixture('main.zip') })
+
+    Dir.mktmpdir do |dir|
+      sha256 = @job.download_file(dir)
+      assert_equal sha256, '826d05d1869c3aa66dce47e6f79fc6800f72d34b706adba1eecd0d2d5e98e17b'
+    end
+  end
+
   context 'fast_parse?' do
     should 'quickly parse a json file' do
       @job.url = 'https://raw.githubusercontent.com/ecosyste-ms/digest/main/package.json'
