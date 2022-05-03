@@ -1,0 +1,71 @@
+openapi: 3.0.1
+info:
+  title: "Ecosyste.ms: Parser"
+  description: "An open API service to parse dependency metadata from many open source software ecosystems manifest files. "
+  contact:
+    name: Ecosyste.ms
+    email: support@ecosyste.ms
+    url: https://ecosyste.ms 
+  version: 1.0.0
+externalDocs:
+  description: GitHub Repository
+  url: https://github.com/ecosyste-ms/parser
+servers:
+- url: https://parser.ecosyste.ms/api/v1
+paths:
+  /jobs:
+    post:
+      summary: submit a dependency parsing job
+      operationId: createJob
+      parameters:
+        - name: url
+          in: query
+          description: url of file or zip/tar archive
+          required: true
+          type: string
+      responses:
+        301:
+          description: Redirect
+          headers:
+            location:
+              description: URL of submitted job
+  /jobs/{jobID}:
+    get:
+      summary: fetch job by id
+      operationId: getJob
+      parameters:
+        - in: path
+          name: jobId
+          schema:
+            type: string
+          required: true
+          description: id of job
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+components:
+  schemas:
+    Job:
+      type: object
+      properties:
+        url:
+          type: string
+        status:
+          type: string
+        results:
+          type: object
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        sidekiq_id:
+          type: string
+        sha256:
+          type: string
+    
