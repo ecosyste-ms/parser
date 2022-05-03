@@ -8,7 +8,6 @@ gem "sprockets-rails"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "jbuilder"
-gem "redis", "~> 4.0"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 gem "sassc-rails"
@@ -16,6 +15,8 @@ gem "faraday"
 gem "faraday-retry"
 gem "faraday-gzip"
 gem "faraday-follow_redirects"
+gem "hiredis"
+gem "redis", require: ["redis", "redis/connection/hiredis"]
 gem "sidekiq"
 gem "sidekiq-unique-jobs"
 gem 'sidekiq-status'
