@@ -29,6 +29,19 @@ paths:
           headers:
             location:
               description: URL of submitted job
+  /jobs/formats:
+    get:
+      summary: list supporte file formats and ecosystems
+      operationId: jobFormats
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Format'
   /jobs/{jobID}:
     get:
       summary: fetch job by id
@@ -68,4 +81,7 @@ components:
           type: string
         sha256:
           type: string
-    
+    Format:
+      type: object
+      additionalProperties:
+        type: string
