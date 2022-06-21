@@ -48,7 +48,7 @@ class Job < ApplicationRecord
     case mime_type(path)
     when "application/zip"
       destination = File.join([dir, 'zip'])
-      `unzip -qj #{path} -d #{destination}`
+      `unzip -oqj #{path} -d #{destination}`
       results = Bibliothecary.analyse(destination)
     when "application/gzip"
       destination = File.join([dir, 'tar'])
