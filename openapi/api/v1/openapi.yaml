@@ -8,8 +8,7 @@ info:
     url: https://ecosyste.ms 
   version: 1.0.0
   license:
-    name: CC BY-SA 4.0
-    identifier: CC-BY-SA-4.0
+    name: CC-BY-SA-4.0
     url: https://creativecommons.org/licenses/by-sa/4.0/
 externalDocs:
   description: GitHub Repository
@@ -26,13 +25,16 @@ paths:
           in: query
           description: url of file or zip/tar archive
           required: true
-          type: string
+          schema:
+            type: string
       responses:
         301:
           description: Redirect
           headers:
             location:
               description: URL of submitted job
+              schema:
+                type: string
   /jobs/formats:
     get:
       summary: list supporte file formats and ecosystems
@@ -52,7 +54,7 @@ paths:
       operationId: getJob
       parameters:
         - in: path
-          name: jobId
+          name: jobID
           schema:
             type: string
           required: true
