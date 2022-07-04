@@ -2,10 +2,20 @@ class Job < ApplicationRecord
   validates_presence_of :url
   validates_uniqueness_of :id
 
+  scope :status, ->(status) { where(status: status) }
+
+  def self.check_statuses
+    Job.where(status: ["queued", "working"]).find_each(&:check_status)
+  end
+
   def check_status
     return if sidekiq_id.blank?
     return if finished?
-    update(status: Sidekiq::Status.status(sidekiq_id))
+    update(status: fetch_status)
+  end
+
+  def fetch_status
+    Sidekiq::Status.status(sidekiq_id).presence || 'error'
   end
 
   def finished?
