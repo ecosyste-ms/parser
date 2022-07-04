@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_29_124152) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_04_074244) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_29_124152) do
     t.json "results", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_jobs_on_status"
   end
 
 end
