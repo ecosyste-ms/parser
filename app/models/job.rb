@@ -44,7 +44,12 @@ class Job < ApplicationRecord
     begin
       Dir.mktmpdir do |dir|
         sha256 = download_file(dir)
-        results = parse_dependencies(dir)
+
+        if existing_job = Job.find_by(sha256: sha256, status: 'complete')
+          results = existing_job.results
+        else
+          results = parse_dependencies(dir)
+        end
         update!(results: results, status: 'complete', sha256: sha256)
       end
     rescue => e

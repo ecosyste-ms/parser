@@ -25,6 +25,7 @@ class JobTest < ActiveSupport::TestCase
     Dir.mktmpdir do |dir|
       FileUtils.cp(File.join(file_fixture_path, 'main.zip'), dir)
       results = @job.parse_dependencies(dir)
+      
       assert_equal results[:manifests], [
         {
           :ecosystem=>"npm",
@@ -78,6 +79,41 @@ class JobTest < ActiveSupport::TestCase
     should 'not quickly parse a zip file' do
       @job.url = 'https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip'
       refute @job.fast_parse?
+    end
+  end
+
+  context 'existing results' do
+    should 'reuse existing results' do
+      @existing_job = Job.create(
+        url: 'https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip',
+        sidekiq_id: '123',
+        ip: '123.456.78.9',
+        sha256: '826d05d1869c3aa66dce47e6f79fc6800f72d34b706adba1eecd0d2d5e98e17b',
+        status: 'complete')
+      
+      stub_request(:get, "https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip")
+        .to_return({ status: 200, body: file_fixture('main.zip') })
+
+      @job.expects(:parse_dependencies).never
+
+      @job.perform_dependency_parsing
+      assert_equal @job.results, @existing_job.results
+    end
+
+    should 'not reuse existing results that errored' do
+      @existing_job = Job.create(
+        url: 'https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip',
+        sidekiq_id: '123',
+        ip: '123.456.78.9',
+        sha256: '826d05d1869c3aa66dce47e6f79fc6800f72d34b706adba1eecd0d2d5e98e17b',
+        status: 'error')
+      
+      stub_request(:get, "https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip")
+        .to_return({ status: 200, body: file_fixture('main.zip') })
+
+      @job.expects(:parse_dependencies).once
+
+      @job.perform_dependency_parsing
     end
   end
 end
