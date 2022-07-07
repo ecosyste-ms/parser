@@ -71,6 +71,8 @@ components:
     Job:
       type: object
       properties:
+        id:
+          type: string
         url:
           type: string
         status:
