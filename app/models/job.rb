@@ -48,7 +48,9 @@ class Job < ApplicationRecord
         if existing_job = Job.find_by(sha256: sha256, status: 'complete')
           results = existing_job.results
         else
-          results = parse_dependencies(dir)
+          Timeout::timeout(5.minutes) do
+            results = parse_dependencies(dir)
+          end
         end
         update!(results: results, status: 'complete', sha256: sha256)
       end
@@ -82,7 +84,7 @@ class Job < ApplicationRecord
     path = working_directory(dir)
     downloaded_file = File.open(path, "wb")
 
-    request = Typhoeus::Request.new(url, followlocation: true)
+    request = Typhoeus::Request.new(url, followlocation: true, timeout: 60)
     request.on_headers do |response|
       return nil if response.code != 200
     end

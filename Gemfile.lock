@@ -1,3 +1,19 @@
+GIT
+  remote: https://github.com/ecosyste-ms/bibliothecary.git
+  revision: 8b80df94f842fc7f8554ad7bfe7e8b05e6a672dc
+  specs:
+    bibliothecary (8.3.4)
+      commander
+      deb_control
+      librariesio-gem-parser
+      ox (>= 2.8.1)
+      packageurl-ruby
+      sdl4r
+      strings
+      strings-ansi
+      tomlrb (~> 2.0)
+      typhoeus
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -70,17 +86,6 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     autoprefixer-rails (10.4.7.0)
       execjs (~> 2)
-    bibliothecary (8.3.4)
-      commander
-      deb_control
-      librariesio-gem-parser
-      ox (>= 2.8.1)
-      packageurl-ruby
-      sdl4r
-      strings
-      strings-ansi
-      tomlrb (~> 2.0)
-      typhoeus
     bindex (0.8.1)
     bootsnap (1.12.0)
       msgpack (~> 1.2)
@@ -313,7 +318,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  bibliothecary
+  bibliothecary!
   bootsnap
   bootstrap
   debug

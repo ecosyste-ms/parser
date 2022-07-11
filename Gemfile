@@ -20,7 +20,7 @@ gem "redis", require: ["redis", "redis/connection/hiredis"]
 gem "sidekiq"
 gem "sidekiq-unique-jobs"
 gem 'sidekiq-status'
-gem "bibliothecary"
+gem "bibliothecary", github: 'ecosyste-ms/bibliothecary'
 gem "pghero"
 gem "pg_query"
 gem 'bootstrap'
