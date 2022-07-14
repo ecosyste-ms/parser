@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/ecosyste-ms/bibliothecary.git
-  revision: 8b80df94f842fc7f8554ad7bfe7e8b05e6a672dc
+  revision: 5ef697caae1a552b21aaf9b913b16802790e297c
   specs:
-    bibliothecary (8.3.4)
+    bibliothecary (8.3.5)
       commander
       deb_control
       librariesio-gem-parser
@@ -135,7 +135,7 @@ GEM
     hashdiff (1.0.1)
     highline (2.0.3)
     hiredis (0.6.3)
-    i18n (1.11.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     io-console (0.5.11)
     irb (1.4.1)
