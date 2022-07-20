@@ -56,11 +56,25 @@ class JobTest < ActiveSupport::TestCase
   end
 
   test 'works on jar files' do
+    @job = Job.create(url: 'https://repo.clojars.org/vald-client-clj/vald-client-clj/v1.5.6/vald-client-clj-v1.5.6.jar', sidekiq_id: '123', ip: '123.456.78.9')
+
     Dir.mktmpdir do |dir|
-      FileUtils.cp(File.join(file_fixture_path, 'clj-data-adapter-0.2.1.jar'), dir)
+      FileUtils.cp(File.join(file_fixture_path, 'vald-client-clj-v1.5.6.jar'), dir)
       results = @job.parse_dependencies(dir)
       
-      assert_equal results[:manifests], []
+      assert_equal results[:manifests][1], {:ecosystem=>"maven",
+        :path=>"maven/vald-client-clj/vald-client-clj/pom.xml",
+        :dependencies=>
+         [{:name=>"org.clojure:clojure", :requirement=>"1.11.1", :type=>"runtime"},
+          {:name=>"io.grpc:grpc-api", :requirement=>"1.47.0", :type=>"runtime"},
+          {:name=>"io.grpc:grpc-core", :requirement=>"1.47.0", :type=>"runtime"},
+          {:name=>"io.grpc:grpc-protobuf", :requirement=>"1.47.0", :type=>"runtime"},
+          {:name=>"io.grpc:grpc-stub", :requirement=>"1.47.0", :type=>"runtime"},
+          {:name=>"io.envoyproxy.protoc-gen-validate:pgv-java-stub", :requirement=>"0.6.7", :type=>"runtime"},
+          {:name=>"org.vdaas.vald:vald-client-java", :requirement=>"1.5.6", :type=>"runtime"}],
+        :kind=>"manifest",
+        :success=>true,
+        :related_paths=>[]}
     end
   end
 
