@@ -63,7 +63,7 @@ class Job < ApplicationRecord
     path = working_directory(dir)
 
     case mime_type(path)
-    when "application/zip"
+    when "application/zip", "application/java-archive"
       destination = File.join([dir, 'zip'])
       `mkdir #{destination} && bsdtar --strip-components=1 -xvf #{path} -C #{destination} > /dev/null 2>&1 `
       results = Bibliothecary.analyse(destination)

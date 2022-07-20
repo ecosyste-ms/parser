@@ -55,6 +55,15 @@ class JobTest < ActiveSupport::TestCase
     end
   end
 
+  test 'works on jar files' do
+    Dir.mktmpdir do |dir|
+      FileUtils.cp(File.join(file_fixture_path, 'clj-data-adapter-0.2.1.jar'), dir)
+      results = @job.parse_dependencies(dir)
+      
+      assert_equal results[:manifests], []
+    end
+  end
+
   test 'download_file' do
     stub_request(:get, "https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip")
       .to_return({ status: 200, body: file_fixture('main.zip') })
