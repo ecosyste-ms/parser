@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/ecosyste-ms/bibliothecary.git
-  revision: 07fda137ec8b6200e5a74250f7981038d484d044
+  revision: dd3b0afb8a38eef574bd87fd7d1298c14dc64947
   specs:
-    bibliothecary (8.3.7)
+    bibliothecary (8.3.8)
       commander
       deb_control
       librariesio-gem-parser
@@ -300,7 +300,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webmock (3.16.0)
+    webmock (3.17.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
