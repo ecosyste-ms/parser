@@ -16,8 +16,8 @@ gem "faraday-retry"
 gem "faraday-gzip"
 gem "faraday-follow_redirects"
 gem "hiredis"
-gem "redis", require: ["redis", "redis/connection/hiredis"]
-gem "sidekiq"
+gem "redis", "<5", require: ["redis", "redis/connection/hiredis"]
+gem "sidekiq", "<7"
 gem "sidekiq-unique-jobs"
 gem 'sidekiq-status'
 gem "bibliothecary", github: 'ecosyste-ms/bibliothecary'

@@ -331,12 +331,12 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.0.4)
   rails-controller-testing
-  redis
+  redis (< 5)
   rswag-api
   rswag-ui
   sassc-rails
   shoulda
-  sidekiq
+  sidekiq (< 7)
   sidekiq-status
   sidekiq-unique-jobs
   sprockets-rails
