@@ -179,7 +179,7 @@ GEM
     numerizer (0.1.1)
     ox (2.14.11)
     packageurl-ruby (0.1.0)
-    pg (1.4.4)
+    pg (1.4.5)
     pg_query (2.2.0)
       google-protobuf (>= 3.19.2)
     pghero (3.0.1)
