@@ -116,6 +116,10 @@ class Job < ApplicationRecord
 
   def self.formats
     {
+      actions: [
+        "action.yml",
+        "action.yaml",
+      ],
       bower: [
         "bower.json"
       ],
@@ -153,6 +157,10 @@ class Job < ApplicationRecord
       cyclonedx: [
         "cyclonedx.xml",
         "cyclonedx.json"
+      ],
+      docker: [
+        "Dockerfile",
+        "docker-compose.yml",
       ],
       dub: [
         "dub.json",
