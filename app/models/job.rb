@@ -86,7 +86,7 @@ class Job < ApplicationRecord
 
     request = Typhoeus::Request.new(url, followlocation: true, timeout: 60)
     request.on_headers do |response|
-      return nil if response.code != 200
+      return nil unless [200,301,302].include? response.code
     end
     request.on_body { |chunk| downloaded_file.write(chunk) }
     request.on_complete { downloaded_file.close }
