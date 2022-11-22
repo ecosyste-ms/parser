@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ecosyste-ms/bibliothecary.git
-  revision: e277415cd23292f54fe2fb881322efd5e8e4180d
+  revision: 8e29be1ad003dd22b9f61bd2d8d7b71c68b580f9
   specs:
     bibliothecary (8.4.6)
       commander
@@ -11,7 +11,7 @@ GIT
       sdl4r
       strings
       strings-ansi
-      tomlrb (~> 2.0)
+      tomlrb
       typhoeus
 
 GEM

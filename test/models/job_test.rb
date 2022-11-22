@@ -28,6 +28,15 @@ class JobTest < ActiveSupport::TestCase
       
       assert_equal results[:manifests], [
         {
+          :ecosystem=>"docker", 
+          :path=>"Dockerfile", 
+          :dependencies=>
+            [{:name=>"node", :requirement=>"18.0.0-alpine", :type=>"build"}],
+          :kind=>"manifest", 
+          :success=>true, 
+          :related_paths=>[]
+        },
+        {
           :ecosystem=>"npm",
           :path=>"package-lock.json",
           :dependencies=>
