@@ -119,6 +119,8 @@ class Job < ApplicationRecord
       actions: [
         "action.yml",
         "action.yaml",
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml",
       ],
       bower: [
         "bower.json"
