@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/ecosyste-ms/bibliothecary.git
-  revision: 02cc5168359e486eb0ef9d507348aeddd7cfb9e3
+  revision: 804e213da75de2e52bc8000f8cb045d26f82d95a
   specs:
-    bibliothecary (8.4.6)
+    bibliothecary (8.5.0)
       commander
       deb_control
       librariesio-gem-parser
@@ -349,4 +349,4 @@ RUBY VERSION
    ruby 3.1.2p20
 
 BUNDLED WITH
-   2.3.13
+   2.3.26
