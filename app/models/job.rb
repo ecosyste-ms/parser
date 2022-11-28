@@ -262,7 +262,7 @@ class Job < ApplicationRecord
         "shard.yml",
         "shard.lock"
       ],
-      swift: [
+      swiftpm: [
         "Package.swift",
         "Package.resolved"
       ]
