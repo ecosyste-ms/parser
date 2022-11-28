@@ -263,7 +263,8 @@ class Job < ApplicationRecord
         "shard.lock"
       ],
       swift: [
-        "Package.swift"
+        "Package.swift",
+        "Package.resolved"
       ]
     }
   end
