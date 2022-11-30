@@ -197,6 +197,10 @@ class Job < ApplicationRecord
         "mix.exs",
         "mix.lock"
       ],
+      homebrew: [
+        "Brewfile",
+        "Brewfile.lock.json"
+      ],
       julia: [
         "REQUIRE"
       ],
