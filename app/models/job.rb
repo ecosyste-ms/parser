@@ -265,7 +265,10 @@ class Job < ApplicationRecord
       swiftpm: [
         "Package.swift",
         "Package.resolved"
-      ]
+      ],
+      vcpkg: [
+        "vcpkg.json",
+      ],
     }
   end
 end
