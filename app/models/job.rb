@@ -222,7 +222,8 @@ class Job < ApplicationRecord
         "package-lock.json",
         "npm-shrinkwrap.json",
         "yarn.lock",
-        "npm-ls.json"
+        "npm-ls.json",
+        "pnpm-lock.yaml"
       ],
       nuget: [
         "packages.config",
