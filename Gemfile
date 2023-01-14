@@ -30,7 +30,7 @@ gem 'rack-cors'
 gem 'rswag-api'
 gem 'rswag-ui'
 gem 'google-protobuf'
-gem 'nokogiri', '1.14.0.rc1'
+gem 'nokogiri', '1.14.0'
 gem 'appsignal'
 
 group :development, :test do
