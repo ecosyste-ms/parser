@@ -103,7 +103,7 @@ GEM
       numerizer (~> 0.1.1)
     commander (4.6.0)
       highline (~> 2.0.0)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.0)
     connection_pool (2.3.0)
     crack (0.4.5)
       rexml
@@ -129,7 +129,7 @@ GEM
     faraday-retry (2.0.0)
       faraday (~> 2.0)
     ffi (1.15.5)
-    globalid (1.0.1)
+    globalid (1.1.0)
       activesupport (>= 5.0)
     google-protobuf (3.21.12)
     hashdiff (1.0.1)
