@@ -111,8 +111,6 @@ GEM
     date (3.3.3)
     deb_control (0.0.1)
     debug (1.7.1)
-      irb (>= 1.5.0)
-      reline (>= 0.3.1)
     erubi (1.12.0)
     ethon (0.16.0)
       ffi (>= 1.15.0)
@@ -137,9 +135,6 @@ GEM
     hiredis (0.6.3)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
-    io-console (0.6.0)
-    irb (1.6.2)
-      reline (>= 0.3.0)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -234,9 +229,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
-    redis (4.8.0)
-    reline (0.3.2)
-      io-console (~> 0.5)
+    redis (4.8.1)
     rexml (3.2.5)
     rswag-api (2.8.0)
       railties (>= 3.1, < 7.1)
@@ -354,7 +347,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.2.0p185
+   ruby 3.2.1p185
 
 BUNDLED WITH
-   2.4.5
+   2.4.6
