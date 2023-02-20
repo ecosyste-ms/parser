@@ -4,6 +4,10 @@ class Job < ApplicationRecord
 
   scope :status, ->(status) { where(status: status) }
 
+  def self.clean_up
+    Job.status(["complete",'error']).where('created_at < ?', 1.month.ago).delete_all
+  end
+
   def self.check_statuses
     Job.where(status: ["queued", "working"]).find_each(&:check_status)
   end

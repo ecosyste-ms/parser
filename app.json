@@ -3,6 +3,10 @@
     {
       "command": "bundle exec rake jobs:check_statuses",
       "schedule": "*/10 * * * *"
+    },
+    {
+      "command": "bundle exec rake jobs:cleanup",
+      "schedule": "0 * * * *"
     }
   ]
 }
