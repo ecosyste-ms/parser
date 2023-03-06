@@ -126,7 +126,7 @@ GEM
       faraday (>= 1.0)
       zlib (~> 2.1)
     faraday-net_http (3.0.2)
-    faraday-retry (2.0.0)
+    faraday-retry (2.1.0)
       faraday (~> 2.0)
     ffi (1.15.5)
     globalid (1.1.0)
