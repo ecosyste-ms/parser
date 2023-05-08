@@ -270,7 +270,7 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.14.0)
-    sidekiq-status (3.0.2)
+    sidekiq-status (3.0.3)
       chronic_duration
       sidekiq (>= 6.0, < 8)
     sidekiq-unique-jobs (8.0.2)
