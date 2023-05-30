@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/ecosyste-ms/bibliothecary.git
-  revision: 3e018fc5193e4c4810a0475c186b213b793b79e7
+  revision: 325d344c8b698d47fa5ac273993cfcc6bd65fb37
   specs:
-    bibliothecary (8.6.1)
+    bibliothecary (8.6.2)
       commander
       deb_control
       librariesio-gem-parser
@@ -227,8 +227,9 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.5.0)
-      loofah (~> 2.19, >= 2.19.1)
+    rails-html-sanitizer (1.6.0)
+      loofah (~> 2.21)
+      nokogiri (~> 1.14)
     railties (7.0.5)
       actionpack (= 7.0.5)
       activesupport (= 7.0.5)
