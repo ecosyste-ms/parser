@@ -5,7 +5,7 @@ class Job < ApplicationRecord
   scope :status, ->(status) { where(status: status) }
 
   def self.clean_up
-    Job.status(["complete",'error']).where('created_at < ?', 1.month.ago).delete_all
+    Job.status(["complete",'error']).where('created_at < ?', 1.week.ago).in_batches.delete_all
   end
 
   def self.check_statuses
