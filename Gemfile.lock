@@ -185,7 +185,7 @@ GEM
     nokogiri (1.15.3-x86_64-linux)
       racc (~> 1.4)
     numerizer (0.1.1)
-    ox (2.14.16)
+    ox (2.14.17)
     packageurl-ruby (0.1.0)
     pg (1.5.3)
     pg_query (4.2.1)
