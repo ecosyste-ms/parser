@@ -3,6 +3,6 @@ class ParseDependenciesWorker
   include Sidekiq::Status::Worker
 
   def perform(job_id)
-    Job.find_by_id!(job_id).perform_dependency_parsing
+    Job.find_by_id(job_id).try(:perform_dependency_parsing)
   end
 end
