@@ -5,7 +5,7 @@
       "schedule": "*/10 * * * *"
     },
     {
-      "command": "bundle exec rake jobs:cleanup",
+      "command": "bundle exec rake jobs:clean_up",
       "schedule": "0 * * * *"
     }
   ]
