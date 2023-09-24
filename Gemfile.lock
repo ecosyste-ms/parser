@@ -130,7 +130,7 @@ GEM
     faraday-net_http (3.0.2)
     faraday-retry (2.2.0)
       faraday (~> 2.0)
-    ffi (1.15.5)
+    ffi (1.16.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-protobuf (3.24.3)
@@ -199,7 +199,7 @@ GEM
     psych (5.1.0)
       stringio
     public_suffix (5.0.3)
-    puma (6.3.1)
+    puma (6.4.0)
       nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.8)
