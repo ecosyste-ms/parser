@@ -145,10 +145,6 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-protobuf (3.25.1)
-    google-protobuf (3.25.1-aarch64-linux)
-    google-protobuf (3.25.1-arm64-darwin)
-    google-protobuf (3.25.1-x86_64-darwin)
-    google-protobuf (3.25.1-x86_64-linux)
     hashdiff (1.1.0)
     highline (2.0.3)
     i18n (1.14.1)
@@ -388,7 +384,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.2.2p185
+   ruby 3.3.0p185
 
 BUNDLED WITH
    2.5.3
