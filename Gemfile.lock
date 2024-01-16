@@ -17,6 +17,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    abbrev (0.1.2)
     actioncable (7.1.2)
       actionpack (= 7.1.2)
       activesupport (= 7.1.2)
@@ -93,7 +94,7 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
-    appsignal (3.5.3)
+    appsignal (3.5.4)
       rack
     autoprefixer-rails (10.4.16.0)
       execjs (~> 2)
@@ -111,8 +112,8 @@ GEM
     builder (3.2.4)
     chronic_duration (0.10.6)
       numerizer (~> 0.1.1)
-    commander (4.6.0)
-      highline (~> 2.0.0)
+    commander (5.0.0)
+      highline (~> 3.0.0)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     crack (0.4.5)
@@ -145,7 +146,8 @@ GEM
       activesupport (>= 6.1)
     google-protobuf (3.25.2)
     hashdiff (1.1.0)
-    highline (2.0.3)
+    highline (3.0.0)
+      abbrev
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.7.1)
