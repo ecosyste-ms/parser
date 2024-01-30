@@ -112,7 +112,8 @@ GEM
       highline (~> 3.0.0)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
-    crack (0.4.5)
+    crack (0.4.6)
+      bigdecimal
       rexml
     crass (1.0.6)
     date (3.3.4)
