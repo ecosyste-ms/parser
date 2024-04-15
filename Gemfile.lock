@@ -135,7 +135,7 @@ GEM
       zlib (~> 3.0)
     faraday-net_http (3.1.0)
       net-http
-    faraday-retry (2.2.0)
+    faraday-retry (2.2.1)
       faraday (~> 2.0)
     ffi (1.16.3)
     globalid (1.2.1)
@@ -172,7 +172,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.5)
+    mini_portile2 (2.8.6)
     minitest (5.22.3)
     mocha (2.2.0)
       ruby2_keywords (>= 0.0.5)
@@ -266,9 +266,9 @@ GEM
     rake (13.2.1)
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
-    redis (5.1.0)
-      redis-client (>= 0.17.0)
-    redis-client (0.21.1)
+    redis (5.2.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.22.0)
       connection_pool
     reline (0.5.1)
       io-console (~> 0.5)
@@ -394,4 +394,4 @@ RUBY VERSION
    ruby 3.3.0p185
 
 BUNDLED WITH
-   2.5.8
+   2.5.9
