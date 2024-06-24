@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/ecosyste-ms/bibliothecary.git
-  revision: c68952643ecc1a622798a789fa13eaec805af400
+  revision: 7a5845a9b008aea69b702617a90d66c9b4c8bf39
   specs:
-    bibliothecary (8.8.1)
+    bibliothecary (9.1.0)
       commander
       deb_control
       librariesio-gem-parser
