@@ -25,40 +25,40 @@ class JobTest < ActiveSupport::TestCase
     Dir.mktmpdir do |dir|
       FileUtils.cp(File.join(file_fixture_path, 'main.zip'), dir)
       results = @job.parse_dependencies(dir)
-      
+
       assert_equal results[:manifests], [
         {
-          :ecosystem=>"docker", 
-          :path=>"Dockerfile", 
+          :ecosystem=>"docker",
+          :path=>"Dockerfile",
           :dependencies=>
             [{:name=>"node", :requirement=>"18.0.0-alpine", :type=>"build"}],
-          :kind=>"manifest", 
-          :success=>true, 
+          :kind=>"manifest",
+          :success=>true,
           :related_paths=>[]
         },
         {
           :ecosystem=>"npm",
           :path=>"package-lock.json",
           :dependencies=>
-            [{:name=>"abort-controller", :requirement=>"3.0.0", :type=>"runtime"},
-            {:name=>"event-target-shim", :requirement=>"5.0.1", :type=>"runtime"},
-            {:name=>"node-fetch", :requirement=>"2.6.7", :type=>"runtime"},
-            {:name=>"tr46", :requirement=>"0.0.3", :type=>"runtime"},
-            {:name=>"webidl-conversions", :requirement=>"3.0.1", :type=>"runtime"},
-            {:name=>"whatwg-url", :requirement=>"5.0.0", :type=>"runtime"}],
+          [{:name=>"abort-controller", :requirement=>"3.0.0", :type=>"runtime", :local=>false},
+            {:name=>"event-target-shim", :requirement=>"5.0.1", :type=>"runtime", :local=>false},
+            {:name=>"node-fetch", :requirement=>"2.6.7", :type=>"runtime", :local=>false},
+            {:name=>"tr46", :requirement=>"0.0.3", :type=>"runtime", :local=>false},
+            {:name=>"webidl-conversions", :requirement=>"3.0.1", :type=>"runtime", :local=>false},
+            {:name=>"whatwg-url", :requirement=>"5.0.0", :type=>"runtime", :local=>false}],
           :kind=>"lockfile",
           :success=>true,
           :related_paths=>["package.json"]
         },
         {
-        :ecosystem=>"npm",
-        :path=>"package.json",
-        :dependencies=>
-          [{:name=>"abort-controller", :requirement=>"^3.0.0", :type=>"runtime"},
-          {:name=>"node-fetch", :requirement=>"^2.6.7", :type=>"runtime"}],
-        :kind=>"manifest",
-        :success=>true,
-        :related_paths=>["package-lock.json"]
+          :ecosystem=>"npm",
+          :path=>"package.json",
+          :dependencies=>
+          [{:name=>"abort-controller", :requirement=>"^3.0.0", :type=>"runtime", :local=>false},
+            {:name=>"node-fetch", :requirement=>"^2.6.7", :type=>"runtime", :local=>false}],
+          :kind=>"manifest",
+          :success=>true,
+          :related_paths=>["package-lock.json"]
         }
       ]
     end
