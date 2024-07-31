@@ -93,7 +93,7 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
-    appsignal (3.12.2)
+    appsignal (3.12.3)
       rack
     autoprefixer-rails (10.4.16.0)
       execjs (~> 2)
@@ -221,7 +221,7 @@ GEM
     public_suffix (6.0.1)
     puma (6.4.2)
       nio4r (~> 2.0)
-    racc (1.8.0)
+    racc (1.8.1)
     rack (3.1.7)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
@@ -353,7 +353,7 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.6.16)
+    zeitwerk (2.6.17)
     zlib (3.1.1)
 
 PLATFORMS
