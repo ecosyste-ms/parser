@@ -22,6 +22,7 @@ RUN apk add --update \
     curl-dev \
     libc6-compat \
     libarchive-tools \
+    bash \
  && rm -rf /var/cache/apk/* \
  && gem update --system \
  && gem install bundler foreman \
