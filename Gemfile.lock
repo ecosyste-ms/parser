@@ -309,10 +309,6 @@ GEM
     sidekiq-status (3.0.3)
       chronic_duration
       sidekiq (>= 6.0, < 8)
-    sidekiq-unique-jobs (8.0.10)
-      concurrent-ruby (~> 1.0, >= 1.0.5)
-      sidekiq (>= 7.0.0, < 8.0.0)
-      thor (>= 1.0, < 3.0)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -393,7 +389,6 @@ DEPENDENCIES
   shoulda
   sidekiq
   sidekiq-status
-  sidekiq-unique-jobs
   sprockets-rails
   tzinfo-data
   web-console

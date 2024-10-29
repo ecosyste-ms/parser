@@ -17,7 +17,6 @@ gem "faraday-gzip"
 gem "faraday-follow_redirects"
 gem "redis"
 gem "sidekiq"
-gem "sidekiq-unique-jobs"
 gem 'sidekiq-status'
 gem "bibliothecary", github: 'ecosyste-ms/bibliothecary'
 gem "pghero"
