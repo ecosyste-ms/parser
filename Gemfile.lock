@@ -130,8 +130,8 @@ GEM
       logger
     faraday-follow_redirects (0.3.0)
       faraday (>= 1, < 3)
-    faraday-gzip (2.0.1)
-      faraday (>= 1.0)
+    faraday-gzip (3.0.0)
+      faraday (>= 2.0, < 3)
       zlib (~> 3.0)
     faraday-net_http (3.3.0)
       net-http
@@ -166,7 +166,7 @@ GEM
     jbuilder (2.13.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
-    json (2.7.4)
+    json (2.7.5)
     librariesio-gem-parser (1.0.0)
     logger (1.6.1)
     loofah (2.23.1)
