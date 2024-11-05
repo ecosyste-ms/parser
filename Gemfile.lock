@@ -168,7 +168,7 @@ GEM
     jbuilder (2.13.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
-    json (2.7.5)
+    json (2.7.6)
     librariesio-gem-parser (1.0.0)
     logger (1.6.1)
     loofah (2.23.1)
@@ -302,7 +302,7 @@ GEM
     shoulda-context (2.0.0)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
-    sidekiq (7.3.4)
+    sidekiq (7.3.5)
       connection_pool (>= 2.3.0)
       logger
       rack (>= 2.2.4)
