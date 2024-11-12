@@ -157,7 +157,7 @@ GEM
     google-protobuf (4.28.3-x86_64-linux)
       bigdecimal
       rake (>= 13)
-    hashdiff (1.1.1)
+    hashdiff (1.1.2)
     highline (3.0.1)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
@@ -185,7 +185,7 @@ GEM
     minitest (5.25.1)
     mocha (2.5.0)
       ruby2_keywords (>= 0.0.5)
-    msgpack (1.7.3)
+    msgpack (1.7.5)
     net-http (0.5.0)
       uri
     net-imap (0.5.1)
@@ -295,7 +295,7 @@ GEM
       sprockets-rails
       tilt
     sdl4r (0.9.11)
-    securerandom (0.3.1)
+    securerandom (0.3.2)
     shoulda (4.0.0)
       shoulda-context (~> 2.0)
       shoulda-matchers (~> 4.0)
@@ -348,7 +348,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     zeitwerk (2.7.1)
-    zlib (3.1.1)
+    zlib (3.2.0)
 
 PLATFORMS
   aarch64-linux-musl
