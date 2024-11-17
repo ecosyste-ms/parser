@@ -168,7 +168,7 @@ GEM
     jbuilder (2.13.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
-    json (2.8.1)
+    json (2.8.2)
     librariesio-gem-parser (1.0.0)
     logger (1.6.1)
     loofah (2.23.1)
@@ -181,7 +181,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.7)
+    mini_portile2 (2.8.8)
     minitest (5.25.1)
     mocha (2.5.0)
       ruby2_keywords (>= 0.0.5)
