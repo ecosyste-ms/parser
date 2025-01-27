@@ -4,6 +4,8 @@ An open API service to parse dependency metadata from many open source software 
 
 This project is part of [Ecosyste.ms](https://ecosyste.ms): Tools and open datasets to support, sustain, and secure critical digital infrastructure.
 
+It uses [Bibliothecary](https://github.com/ecosyste-ms/bibliothecary) library to parse the manifest files.
+
 ## API
 
 Documentation for the REST API is available here: [https://parser.ecosyste.ms/docs](https://parser.ecosyste.ms/docs)
