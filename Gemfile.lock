@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ecosyste-ms/bibliothecary.git
-  revision: 7a5845a9b008aea69b702617a90d66c9b4c8bf39
+  revision: 3113acb0f8968015071e40b0273d9aa4453e7f3a
   specs:
     bibliothecary (9.1.0)
       commander
