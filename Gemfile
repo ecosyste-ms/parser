@@ -6,7 +6,7 @@ ruby '3.4.1'
 gem "rails", "~> 8.0.0"
 gem "sprockets-rails"
 gem "pg", "~> 1.5"
-gem "puma", "~> 6.4"
+gem "puma", "~> 6.6"
 gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
