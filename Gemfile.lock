@@ -217,7 +217,7 @@ GEM
       racc (~> 1.4)
     numerizer (0.1.1)
     ostruct (0.6.1)
-    ox (2.14.21)
+    ox (2.14.22)
       bigdecimal (>= 3.0)
     packageurl-ruby (0.1.0)
     pg (1.5.9)
@@ -495,7 +495,7 @@ CHECKSUMS
   nokogiri (1.18.2-x86_64-linux-gnu) sha256=9330ced4a976604865c2a76ce158e2bc608fa83999552e85a32ec06f85f427db
   numerizer (0.1.1) sha256=10ec9efec62472b69a3a0e275a18a44baa595ce6e2e4cfc1678d5cb2974c336f
   ostruct (0.6.1) sha256=09a3fb7ecc1fa4039f25418cc05ae9c82bd520472c5c6a6f515f03e4988cb817
-  ox (2.14.21) sha256=2cc77af97bdcab1a61df5463bd790ebbc39fb09e0eab9fc843d86f8db6bca0b9
+  ox (2.14.22) sha256=0bbc4a40d109e4b76295c4927b5f2d453070eb5af221e5b05ec0ff58e291c6a9
   packageurl-ruby (0.1.0) sha256=3edfa1ce355200fde2a1d2cf625dafdf28d0cc9472eb99493325bf3d88e9daa3
   pg (1.5.9) sha256=761efbdf73b66516f0c26fcbe6515dc7500c3f0aa1a1b853feae245433c64fdc
   pg_query (6.0.0) sha256=fbf09a4e900cee1d61e2bbfda1fefdbc35bc83c5f1c7ae1be1c6ffc5ae0f5c04
