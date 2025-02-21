@@ -23,6 +23,7 @@ RUN apk add --update \
     libc6-compat \
     libarchive-tools \
     yaml-dev \
+    libffi-dev \
     bash \
  && rm -rf /var/cache/apk/* \
  && gem update --system \
