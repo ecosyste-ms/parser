@@ -5,43 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-      Ecosyste.ms: Parser
+      <%= meta_title %>
     </title>
-    <meta name="description" content="An open API service to parse dependency metadata from many open source software ecosystems manifest files.">
+    <meta name="description" content="<%= meta_description %>">
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
-    <script defer data-domain="parser.ecosyste.ms" src="https://plausible.ecosyste.ms/js/script.js"></script>
     <%= javascript_include_tag "application" %>
+    <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.5.1/styles/github.min.css">
+    <script defer src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/highlight.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   </head>
   <body>
+		<%= render 'shared/header' %>
+		
     <div class="main">
-      <div class="px-4 container-sm pt-2 mt-5 text-center">
-        <h1 class="display-5 fw-bold">
-          <a href="/" class="text-decoration-hover link-dark">Ecosyste.ms: Parser</a>
-        </h1>
-        <div class="col-lg-6 mx-auto">
-          <p class="lead mb-4">
-            An open API service to parse dependency metadata from many open source software ecosystems manifest files.
-          </p>
-        </div>
-      </div>
-
       <%= yield %>
     </div>
 
-    <footer class="py-5 container-sm text-muted text-center">
-      <%= link_to 'About', 'https://ecosyste.ms', class: 'link-dark', target: :_blank  %> — 
-      <%= link_to 'Blog', "https://blog.ecosyste.ms", class: 'link-dark', target: :_blank  %> — 
-      <%= link_to 'API', rswag_ui_path, class: 'link-dark', target: :_blank  %> — 
-      <%= link_to 'Status', 'https://ecosystems.appsignal-status.com/', class: 'link-dark', target: :_blank  %>
-      <br/>
-      <%= link_to 'GitHub', "https://github.com/ecosyste-ms/parser", class: 'link-dark', target: :_blank  %> —
-      <%= link_to 'Open Collective', "https://opencollective.com/ecosystems", class: 'link-dark', target: :_blank  %> —  
-      <%= link_to 'Twitter', "https://twitter.com/ecosyste_ms", class: 'link-dark', target: :_blank  %> —  
-      <%= link_to 'Mastodon', "https://mastodon.social/@ecosystems", class: 'link-dark', target: :_blank  %>
-      <br/>
-      Code: <%= link_to 'AGPL-3', 'https://github.com/ecosyste-ms/parser/blob/main/LICENSE', class: 'link-dark' %>  — 
-      Data: <%= link_to 'CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/', class: 'link-dark', target: :_blank %>
-    </footer>
+    <%= render 'shared/footer' %>
   </body>
 </html>
