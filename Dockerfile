@@ -1,7 +1,7 @@
 FROM ruby:3.4.2-alpine
 
-ENV APP_ROOT /usr/src/app
-ENV DATABASE_PORT 5432
+ENV APP_ROOT=/usr/src/app
+ENV DATABASE_PORT=5432
 WORKDIR $APP_ROOT
 
 # =============================================
@@ -22,6 +22,7 @@ RUN apk add --update \
     curl-dev \
     libc6-compat \
     libarchive-tools \
+    yaml-dev \
     bash \
  && rm -rf /var/cache/apk/* \
  && gem update --system \
