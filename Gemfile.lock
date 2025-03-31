@@ -143,7 +143,7 @@ GEM
       zlib (~> 3.0)
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
-    faraday-retry (2.2.1)
+    faraday-retry (2.3.0)
       faraday (~> 2.0)
     ffi (1.17.1)
     ffi (1.17.1-aarch64-linux-musl)
@@ -460,7 +460,7 @@ CHECKSUMS
   faraday-follow_redirects (0.3.0) sha256=d92d975635e2c7fe525dd494fcd4b9bb7f0a4a0ec0d5f4c15c729530fdb807f9
   faraday-gzip (3.0.3) sha256=86cf68276af848eea6c7e664b85b2cf2b006f08cca11e3bd7e92afbaa4fc893a
   faraday-net_http (3.4.0) sha256=a1f1e4cd6a2cf21599c8221595e27582d9936819977bbd4089a601f24c64e54a
-  faraday-retry (2.2.1) sha256=4146fed14549c0580bf14591fca419a40717de0dd24f267a8ec2d9a728677608
+  faraday-retry (2.3.0) sha256=7e17d1738e256cfdacadfb5558bb9a62b7b5054784fe8072c4e967c313677acc
   ffi (1.17.1) sha256=26f6b0dbd1101e6ffc09d3ca640b2a21840cc52731ad8a7ded9fb89e5fb0fc39
   ffi (1.17.1-aarch64-linux-musl) sha256=88b9d6ae905d21142df27c94bb300042c1aae41b67291885f600eaad16326b1d
   ffi (1.17.1-arm-linux-gnu) sha256=fe14f5ece94082f3b0e651a09008113281f2764e7ea95f522b64e2fe32e11504
