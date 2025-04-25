@@ -173,7 +173,7 @@ GEM
     jbuilder (2.13.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
-    json (2.10.2)
+    json (2.11.2)
     librariesio-gem-parser (1.0.0)
     logger (1.7.0)
     loofah (2.24.0)
@@ -473,7 +473,7 @@ CHECKSUMS
   io-console (0.8.0) sha256=cd6a9facbc69871d69b2cb8b926fc6ea7ef06f06e505e81a64f14a470fddefa2
   irb (1.15.2) sha256=222f32952e278da34b58ffe45e8634bf4afc2dc7aa9da23fed67e581aa50fdba
   jbuilder (2.13.0) sha256=7200a38a1c0081aa81b7a9757e7a299db75bc58cf1fd45ca7919a91627d227d6
-  json (2.10.2) sha256=34e0eada93022b2a0a3345bb0b5efddb6e9ff5be7c48e409cfb54ff8a36a8b06
+  json (2.11.2) sha256=a835408ab981efafc38c19ac763653f7d81398fb3f33f41838a5098a6ecf76c6
   librariesio-gem-parser (1.0.0) sha256=e9ef327f1e9ef03425cc8687f93021857057452f491fcd632a20e30505f13a95
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   loofah (2.24.0) sha256=61e6a710883abb8210887f3dc868cf3ed66594c509d9ff6987621efa6651ee1e
