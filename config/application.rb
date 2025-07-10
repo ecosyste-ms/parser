@@ -32,5 +32,6 @@ module Parser
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.active_support.to_time_preserves_timezone = :zone
   end
 end
