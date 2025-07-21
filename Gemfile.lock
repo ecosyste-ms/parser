@@ -420,7 +420,6 @@ DEPENDENCIES
   sidekiq
   sidekiq-status
   sprockets-rails
-  tzinfo-data
   web-console
   webmock
 
