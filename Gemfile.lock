@@ -224,7 +224,7 @@ GEM
     nokogiri (1.18.8-x86_64-linux-musl)
       racc (~> 1.4)
     numerizer (0.1.1)
-    ostruct (0.6.2)
+    ostruct (0.6.3)
     ox (2.14.23)
       bigdecimal (>= 3.0)
     packageurl-ruby (0.2.0)
@@ -511,7 +511,7 @@ CHECKSUMS
   nokogiri (1.18.8-x86_64-linux-gnu) sha256=4a747875db873d18a2985ee2c320a6070c4a414ad629da625fbc58d1a20e5ecc
   nokogiri (1.18.8-x86_64-linux-musl) sha256=ddd735fba49475a395b9ea793bb6474e3a3125b89960339604d08a5397de1165
   numerizer (0.1.1) sha256=10ec9efec62472b69a3a0e275a18a44baa595ce6e2e4cfc1678d5cb2974c336f
-  ostruct (0.6.2) sha256=6d7302a299e400a2c248d6ce0dad18fc3a5714e8096facc25ffd0c54ee57cfc0
+  ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
   ox (2.14.23) sha256=4a9aedb4d6c78c5ebac1d7287dc7cc6808e14a8831d7adb727438f6a1b461b66
   packageurl-ruby (0.2.0) sha256=9bef22c96622b7d3a0087a7fbca8903f9187b66fbfd6a78299ef115768f5012b
   pg (1.5.9) sha256=761efbdf73b66516f0c26fcbe6515dc7500c3f0aa1a1b853feae245433c64fdc
