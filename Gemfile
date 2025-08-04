@@ -5,8 +5,8 @@ ruby '3.4.5'
 
 gem "rails", "~> 8.0.0"
 gem "sprockets-rails"
-gem "pg", "~> 1.5"
-gem "puma", "~> 6.4"
+gem "pg"
+gem "puma"
 gem "jbuilder"
 gem "bootsnap", require: false
 gem "sassc-rails"
@@ -46,4 +46,4 @@ group :test do
   gem "rails-controller-testing"
 end
 
-gem "bootstrap-icons-helper", "~> 2.0"
+gem "bootstrap-icons-helper"

@@ -394,7 +394,7 @@ DEPENDENCIES
   bibliothecary!
   bootsnap
   bootstrap
-  bootstrap-icons-helper (~> 2.0)
+  bootstrap-icons-helper
   csv
   faraday
   faraday-follow_redirects
@@ -407,10 +407,10 @@ DEPENDENCIES
   mocha
   nokogiri
   ostruct
-  pg (~> 1.5)
+  pg
   pg_query
   pghero
-  puma (~> 6.4)
+  puma
   rack-attack
   rack-attack-rate-limit
   rack-cors
