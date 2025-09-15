@@ -19,7 +19,7 @@ Once you've got all of those installed, from the root directory of the project r
 
 ```
 bin/setup
-rails server
+bin/dev
 ```
 
 You can then load up [http://localhost:3000](http://localhost:3000) to access the service.
@@ -50,7 +50,7 @@ You can run all the tests with:
 
 Background tasks are handled by [sidekiq](https://github.com/mperham/sidekiq), the workers live in [app/sidekiq](app/sidekiq/).
 
-To process the tasks run the following command:
+Sidekiq is automatically run by `bin/dev`, but if you need to run it manually, run the following command:
 
 `bundle exec sidekiq`
 
