@@ -25,12 +25,16 @@ RUN apk add --update \
     yaml-dev \
     libffi-dev \
     bash \
+    jemalloc \
  && rm -rf /var/cache/apk/* \
  && gem update --system \
  && gem install bundler foreman \
  && bundle config --global frozen 1 \
  && bundle config set without 'test' \
  && bundle install --jobs 2
+
+ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
+ENV RUBY_YJIT_ENABLE=1
 
 # ========================================================
 # Application layer
