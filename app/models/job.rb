@@ -258,7 +258,8 @@ class Job < ApplicationRecord
         "Pipfile",
         "Pipfile.lock",
         "pyproject.toml",
-        "poetry.lock"
+        "poetry.lock",
+        "uv.lock"
       ],
       rubygems: [
         "Gemfile",
