@@ -81,7 +81,44 @@ class Job < ApplicationRecord
       results = []
     end
 
-    return { manifests: results.map{|m| m.transform_keys{ |key| key == :platform ? :ecosystem : key }}}
+    return { manifests: results.map{|m| normalize_manifest(m) }}
+  end
+
+  def normalize_manifest(manifest)
+    manifest_hash = manifest.is_a?(Hash) ? manifest.dup : manifest.to_h
+    manifest_hash.transform_keys!{ |key| key == :platform ? :ecosystem : key }
+
+    dependencies = manifest_hash[:dependencies]
+    if dependencies.is_a?(Array)
+      dependencies = dependencies.map do |dep|
+        if dep.is_a?(Bibliothecary::Dependency)
+          dependency_to_hash(dep)
+        else
+          dep
+        end
+      end
+    end
+
+    {
+      ecosystem: manifest_hash[:ecosystem],
+      path: manifest_hash[:path],
+      dependencies: dependencies,
+      kind: manifest_hash[:kind],
+      success: manifest_hash[:success],
+      related_paths: manifest_hash[:related_paths]
+    }
+  end
+
+  def dependency_to_hash(dep)
+    hash = {
+      name: dep.name,
+      requirement: dep.requirement,
+      type: dep.type || "runtime"
+    }
+
+    hash[:local] = dep.local unless dep.local.nil?
+
+    hash
   end
 
   def download_file(dir)
