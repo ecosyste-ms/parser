@@ -199,11 +199,14 @@ class Job < ApplicationRecord
       ],
       cyclonedx: [
         "cyclonedx.xml",
-        "cyclonedx.json"
+        "cyclonedx.json",
+        "*.cdx.xml",
+        "*.cdx.json"
       ],
       docker: [
         "Dockerfile",
-        "docker-compose.yml",
+        "docker-compose*.yml",
+        "docker-compose*.yaml",
       ],
       dub: [
         "dub.json",
@@ -253,7 +256,8 @@ class Job < ApplicationRecord
         "gradle-dependencies-q.txt",
         "maven-resolved-dependencies.txt",
         "sbt-update-full.txt",
-        "maven-dependency-tree.txt"
+        "maven-dependency-tree.txt",
+        "maven-dependency-tree.dot"
       ],
       meteor: [
         "versions.json"
@@ -263,6 +267,7 @@ class Job < ApplicationRecord
         "package-lock.json",
         "npm-shrinkwrap.json",
         "yarn.lock",
+        "bun.lock",
         "npm-ls.json",
         "pnpm-lock.yaml"
       ],
@@ -292,10 +297,12 @@ class Job < ApplicationRecord
         "requirements/*.pip",
         "requirements.frozen",
         "pip-resolved-dependencies.txt",
+        "pip-dependency-graph.json",
         "Pipfile",
         "Pipfile.lock",
         "pyproject.toml",
         "poetry.lock",
+        "pylock.toml",
         "uv.lock"
       ],
       rubygems: [
