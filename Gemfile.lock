@@ -1,15 +1,17 @@
 GIT
   remote: https://github.com/ecosyste-ms/bibliothecary.git
-  revision: 07cb96af171c0d8eeb5aee793e4f0b010e92484e
+  revision: c8c31341c6c9b1c9043193aee859430ab4256f39
   specs:
-    bibliothecary (14.2.0)
+    ecosystems-bibliothecary (14.2.0)
       bundler
       commander
+      csv
       deb_control
       json (~> 2.8)
       librariesio-gem-parser
       ox (>= 2.8.1)
       packageurl-ruby
+      racc
       sdl4r
       tomlrb (~> 2.0)
       typhoeus
@@ -54,13 +56,13 @@ GEM
       uri (>= 0.13.1)
     addressable (2.8.8)
       public_suffix (>= 2.0.2, < 8.0)
-    appsignal (4.8.0)
+    appsignal (4.8.1)
       logger
       rack (>= 2.0.0)
     base64 (0.3.0)
     bigdecimal (4.0.1)
     bindex (0.8.1)
-    bootsnap (1.20.0)
+    bootsnap (1.20.1)
       msgpack (~> 1.2)
     bootstrap (5.3.5)
       popper_js (>= 2.11.8, < 3)
@@ -108,27 +110,12 @@ GEM
       net-http-persistent (>= 4.0.4, < 5)
     faraday-retry (2.4.0)
       faraday (~> 2.0)
-    ffi (1.17.2-aarch64-linux-musl)
-    ffi (1.17.2-arm-linux-gnu)
-    ffi (1.17.2-arm-linux-musl)
-    ffi (1.17.2-arm64-darwin)
-    ffi (1.17.2-x86_64-linux-gnu)
-    ffi (1.17.2-x86_64-linux-musl)
-    google-protobuf (4.33.2)
-      bigdecimal
-      rake (>= 13)
-    google-protobuf (4.33.2-aarch64-linux-musl)
-      bigdecimal
-      rake (>= 13)
-    google-protobuf (4.33.2-arm64-darwin)
-      bigdecimal
-      rake (>= 13)
-    google-protobuf (4.33.2-x86_64-linux-gnu)
-      bigdecimal
-      rake (>= 13)
-    google-protobuf (4.33.2-x86_64-linux-musl)
-      bigdecimal
-      rake (>= 13)
+    ffi (1.17.3-aarch64-linux-musl)
+    ffi (1.17.3-arm-linux-gnu)
+    ffi (1.17.3-arm-linux-musl)
+    ffi (1.17.3-arm64-darwin)
+    ffi (1.17.3-x86_64-linux-gnu)
+    ffi (1.17.3-x86_64-linux-musl)
     hashdiff (1.2.1)
     highline (3.0.1)
     i18n (1.14.8)
@@ -179,8 +166,6 @@ GEM
     pg (1.6.3-arm64-darwin)
     pg (1.6.3-x86_64-linux)
     pg (1.6.3-x86_64-linux-musl)
-    pg_query (6.1.0)
-      google-protobuf (>= 3.25.3)
     pghero (3.7.0)
       activerecord (>= 7.1)
     popper_js (2.11.8)
@@ -190,7 +175,7 @@ GEM
     psych (5.3.1)
       date
       stringio
-    public_suffix (7.0.0)
+    public_suffix (7.0.1)
     puma (7.1.0)
       nio4r (~> 2.0)
     racc (1.8.1)
@@ -283,7 +268,7 @@ GEM
     stringio (3.2.0)
     thor (1.4.0)
     tilt (2.6.1)
-    timeout (0.5.0)
+    timeout (0.6.0)
     tomlrb (2.0.4)
     tsort (0.2.0)
     typhoeus (1.4.1)
@@ -319,25 +304,24 @@ DEPENDENCIES
   activerecord (~> 8.1.1)
   activesupport (~> 8.1.1)
   appsignal
-  bibliothecary!
   bootsnap
   bootstrap
   bootstrap-icons
   csv
   dotenv-rails (~> 3.2)
+  ecosystems-bibliothecary!
   faraday
   faraday-follow_redirects
   faraday-gzip
   faraday-multipart
   faraday-net_http_persistent
   faraday-retry
-  google-protobuf
   jbuilder
+  minitest (~> 5.0)
   mocha
   nokogiri
   ostruct
   pg
-  pg_query
   pghero
   puma
   rack-cors
@@ -362,12 +346,11 @@ CHECKSUMS
   activerecord (8.1.1) sha256=e32c3a03e364fd803498eb4150c21bedc995aa83bc27122a94d480ab1dcb3d17
   activesupport (8.1.1) sha256=5e92534e8d0c8b8b5e6b16789c69dbea65c1d7b752269f71a39422e9546cea67
   addressable (2.8.8) sha256=7c13b8f9536cf6364c03b9d417c19986019e28f7c00ac8132da4eb0fe393b057
-  appsignal (4.8.0) sha256=52566fd9f9bab13f854d2a43653397d9ac3b8c99667a3d0b397ff15a128b6972
+  appsignal (4.8.1) sha256=69e1db8019ce216aff36a716a0dc9317d4ccebfe5be27db11dbd85de1273cb1e
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
-  bibliothecary (14.2.0)
   bigdecimal (4.0.1) sha256=8b07d3d065a9f921c80ceaea7c9d4ae596697295b584c296fe599dd0ad01c4a7
   bindex (0.8.1) sha256=7b1ecc9dc539ed8bccfc8cb4d2732046227b09d6f37582ff12e50a5047ceb17e
-  bootsnap (1.20.0) sha256=f00b569ffc440115c5ec3653d4aee3e770a8b8791327b2e9fbefbd5417b93c51
+  bootsnap (1.20.1) sha256=7ad62cda65c5157bcca0acfcc0ee11fcbb83d7d7a8a72d52ccd85e6ffc130b93
   bootstrap (5.3.5) sha256=d57c9b7a21eaf2182c32fe93d1c0eaa0e1ebe82c46676c5a1fd66dd3a6ac41f8
   bootstrap-icons (1.0.15) sha256=4a19c2360f88263c1606235813b8575ff3d6c0773174ed4ceb368628e5541ae9
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
@@ -383,6 +366,7 @@ CHECKSUMS
   dotenv (3.2.0) sha256=e375b83121ea7ca4ce20f214740076129ab8514cd81378161f11c03853fe619d
   dotenv-rails (3.2.0) sha256=657e25554ba622ffc95d8c4f1670286510f47f2edda9f68293c3f661b303beab
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
+  ecosystems-bibliothecary (14.2.0)
   erb (6.0.1) sha256=28ecdd99c5472aebd5674d6061e3c6b0a45c049578b071e5a52c2a7f13c197e5
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   ethon (0.18.0) sha256=b598afc9f30448cb068b850714b7d6948e941476095d04f90a4ac65b8d6efcb2
@@ -393,17 +377,12 @@ CHECKSUMS
   faraday-net_http (3.4.2) sha256=f147758260d3526939bf57ecf911682f94926a3666502e24c69992765875906c
   faraday-net_http_persistent (2.3.1) sha256=23ffba37d6a27807a10f033d01918ec958aa73fa6ff0fccfbcd5ce2d2e68fca3
   faraday-retry (2.4.0) sha256=7b79c48fb7e56526faf247b12d94a680071ff40c9fda7cf1ec1549439ad11ebe
-  ffi (1.17.2-aarch64-linux-musl) sha256=69e6556b091d45df83e6c3b19d3c54177c206910965155a6ec98de5e893c7b7c
-  ffi (1.17.2-arm-linux-gnu) sha256=d4a438f2b40224ae42ec72f293b3ebe0ba2159f7d1bd47f8417e6af2f68dbaa5
-  ffi (1.17.2-arm-linux-musl) sha256=977dfb7f3a6381206dbda9bc441d9e1f9366bf189a634559c3b7c182c497aaa3
-  ffi (1.17.2-arm64-darwin) sha256=54dd9789be1d30157782b8de42d8f887a3c3c345293b57ffb6b45b4d1165f813
-  ffi (1.17.2-x86_64-linux-gnu) sha256=05d2026fc9dbb7cfd21a5934559f16293815b7ce0314846fee2ac8efbdb823ea
-  ffi (1.17.2-x86_64-linux-musl) sha256=97c0eb3981414309285a64dc4d466bd149e981c279a56371ef811395d68cb95c
-  google-protobuf (4.33.2) sha256=748150d6c642fd655ef39efa23ecf2abe6d616020039a6d1c1764be1da530315
-  google-protobuf (4.33.2-aarch64-linux-musl) sha256=c4b64428183cfd1953ec8c37beec1036668c8ec0865cfb0b18df21181ca397ee
-  google-protobuf (4.33.2-arm64-darwin) sha256=6d0ac185fed18768e5f16338455b1e4b7c38a97fc46f352e709f7a3007b64e1d
-  google-protobuf (4.33.2-x86_64-linux-gnu) sha256=73cba041477afcac92ff383fcbdec195ea28d96b994876d1deaa944d18f91786
-  google-protobuf (4.33.2-x86_64-linux-musl) sha256=97cdf4f772c5540f9274603b00f1474ed5e6e2238b1d8b1585e77f941a36bd2c
+  ffi (1.17.3-aarch64-linux-musl) sha256=020b33b76775b1abacc3b7d86b287cef3251f66d747092deec592c7f5df764b2
+  ffi (1.17.3-arm-linux-gnu) sha256=5bd4cea83b68b5ec0037f99c57d5ce2dd5aa438f35decc5ef68a7d085c785668
+  ffi (1.17.3-arm-linux-musl) sha256=0d7626bb96265f9af78afa33e267d71cfef9d9a8eb8f5525344f8da6c7d76053
+  ffi (1.17.3-arm64-darwin) sha256=0c690555d4cee17a7f07c04d59df39b2fba74ec440b19da1f685c6579bb0717f
+  ffi (1.17.3-x86_64-linux-gnu) sha256=3746b01f677aae7b16dc1acb7cb3cc17b3e35bdae7676a3f568153fb0e2c887f
+  ffi (1.17.3-x86_64-linux-musl) sha256=086b221c3a68320b7564066f46fed23449a44f7a1935f1fe5a245bd89d9aea56
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
   highline (3.0.1) sha256=ca18b218fd581b1fae832f89bfeaf2b34d3a93429c44fd4411042ffce286f009
   i18n (1.14.8) sha256=285778639134865c5e0f6269e0b818256017e8cde89993fdfcbfb64d088824a5
@@ -436,13 +415,12 @@ CHECKSUMS
   pg (1.6.3-arm64-darwin) sha256=7240330b572e6355d7c75a7de535edb5dfcbd6295d9c7777df4d9dddfb8c0e5f
   pg (1.6.3-x86_64-linux) sha256=5d9e188c8f7a0295d162b7b88a768d8452a899977d44f3274d1946d67920ae8d
   pg (1.6.3-x86_64-linux-musl) sha256=9c9c90d98c72f78eb04c0f55e9618fe55d1512128e411035fe229ff427864009
-  pg_query (6.1.0) sha256=8b005229e209f12c5887c34c60d0eb2a241953b9475b53a9840d24578532481e
   pghero (3.7.0) sha256=a8d8497095dbe168bb03fe50a11309ab068cd1c1ef4c88d9bbeb97be4809f522
   popper_js (2.11.8) sha256=f4b0be717fc0d50bdb3dbbc55788525a9e0e8f640b76c9971fc34ee609eadbd2
   pp (0.6.3) sha256=2951d514450b93ccfeb1df7d021cae0da16e0a7f95ee1e2273719669d0ab9df6
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
   psych (5.3.1) sha256=eb7a57cef10c9d70173ff74e739d843ac3b2c019a003de48447b2963d81b1974
-  public_suffix (7.0.0) sha256=f7090b5beb0e56f9f10d79eed4d5fbe551b3b425da65877e075dad47a6a1b095
+  public_suffix (7.0.1) sha256=92098ea5a6272d30d16cb336b20d82fcf6a8781a57b5afa26d0539190b9764b6
   puma (7.1.0) sha256=e45c10cb124f224d448c98db653a75499794edbecadc440ad616cf50f2fd49dd
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
   rack (3.2.4) sha256=5d74b6f75082a643f43c1e76b419c40f0e5527fcfee1e669ac1e6b73c0ccb6f6
@@ -478,7 +456,7 @@ CHECKSUMS
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   thor (1.4.0) sha256=8763e822ccb0f1d7bee88cde131b19a65606657b847cc7b7b4b82e772bcd8a3d
   tilt (2.6.1) sha256=35a99bba2adf7c1e362f5b48f9b581cce4edfba98117e34696dde6d308d84770
-  timeout (0.5.0) sha256=852aefd13f41d84c2d0d83099b275034c6517395884b58e635acc8847c9190cb
+  timeout (0.6.0) sha256=6d722ad619f96ee383a0c557ec6eb8c4ecb08af3af62098a0be5057bf00de1af
   tomlrb (2.0.4) sha256=262f77947ac3ac9b3366a0a5940ecd238300c553e2e14f22009e2afcd2181b99
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
   typhoeus (1.4.1) sha256=1c17db8364bd45ab302dc61e460173c3e69835896be88a3df07c206d5c55ef7c
@@ -491,7 +469,7 @@ CHECKSUMS
   zlib (3.2.2) sha256=908e61263f99c1371b5422581e2d6663bd37c6b04ae13b5f8cb10b0d09379f40
 
 RUBY VERSION
-   ruby 3.4.8p72
+   ruby 4.0.0p0
 
 BUNDLED WITH
    2.7.2

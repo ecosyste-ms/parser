@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.8'
+ruby '4.0.0'
 
 gem "railties", "~> 8.1.1"
 gem "activesupport", "~> 8.1.1"
@@ -26,14 +26,12 @@ gem 'faraday-net_http_persistent'
 gem "redis"
 gem "sidekiq"
 gem 'sidekiq-status'
-gem "bibliothecary", github: 'ecosyste-ms/bibliothecary'
+gem "ecosystems-bibliothecary", github: 'ecosyste-ms/bibliothecary', require: 'bibliothecary'
 gem "pghero"
-gem "pg_query"
 gem 'bootstrap'
 gem 'rack-cors'
 gem 'rswag-api'
 gem 'rswag-ui'
-gem 'google-protobuf'
 gem 'nokogiri'
 gem 'appsignal'
 gem 'csv'
@@ -49,6 +47,7 @@ group :test do
   gem "webmock"
   gem "mocha"
   gem "rails-controller-testing"
+  gem "minitest", "~> 5.0"
 end
 
 gem "bootstrap-icons", require: "bootstrap_icons"
