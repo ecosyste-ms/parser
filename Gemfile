@@ -23,6 +23,7 @@ gem "faraday-gzip"
 gem "faraday-follow_redirects"
 gem "faraday-multipart"
 gem 'faraday-net_http_persistent'
+gem "typhoeus"
 gem "redis"
 gem "sidekiq"
 gem 'sidekiq-status'
