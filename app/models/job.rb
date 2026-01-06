@@ -163,6 +163,9 @@ class Job < ApplicationRecord
         ".github/workflows/*.yml",
         ".github/workflows/*.yaml",
       ],
+      bentoml: [
+        "bentofile.yaml"
+      ],
       bower: [
         "bower.json"
       ],
@@ -184,18 +187,25 @@ class Job < ApplicationRecord
         "*.podspec",
         "*.podspec.json"
       ],
+      cog: [
+        "cog.yaml"
+      ],
+      conan: [
+        "conanfile.txt",
+        "conanfile.py",
+        "conan.lock"
+      ],
       conda: [
         "environment.yml",
         "environment.yaml",
-        "environment.yml.lock",
-        "environment.yaml.lock"
       ],
       cpan: [
         "META.json",
         "META.yml"
       ],
       cran: [
-        "DESCRIPTION"
+        "DESCRIPTION",
+        "renv.lock"
       ],
       cyclonedx: [
         "cyclonedx.xml",
@@ -211,6 +221,9 @@ class Job < ApplicationRecord
       dub: [
         "dub.json",
         "dub.sdl"
+      ],
+      dvc: [
+        "dvc.yaml"
       ],
       elm: [
         "elm-package.json",
@@ -232,7 +245,8 @@ class Job < ApplicationRecord
       ],
       hackage: [
         "*.cabal",
-        "cabal.config"
+        "cabal.config",
+        "stack.yaml.lock"
       ],
       haxelib: [
         "haxelib.json"
@@ -248,6 +262,9 @@ class Job < ApplicationRecord
       julia: [
         "REQUIRE"
       ],
+      luarocks: [
+        "*.rockspec"
+      ],
       maven: [
         "pom.xml",
         "ivy.xml",
@@ -257,10 +274,18 @@ class Job < ApplicationRecord
         "maven-resolved-dependencies.txt",
         "sbt-update-full.txt",
         "maven-dependency-tree.txt",
-        "maven-dependency-tree.dot"
+        "maven-dependency-tree.dot",
+        "gradle.lockfile",
+        "verification-metadata.xml"
       ],
       meteor: [
         "versions.json"
+      ],
+      mlflow: [
+        "MLmodel"
+      ],
+      nimble: [
+        "*.nimble"
       ],
       npm: [
         "package.json",
@@ -279,7 +304,11 @@ class Job < ApplicationRecord
         "*.nuspec",
         "paket.lock",
         "*.csproj",
-        "project.assets.json"
+        "project.assets.json",
+        "*.deps.json"
+      ],
+      ollama: [
+        "Modelfile"
       ],
       packagist: [
         "composer.json",
@@ -302,7 +331,8 @@ class Job < ApplicationRecord
         "Pipfile.lock",
         "pyproject.toml",
         "poetry.lock",
-        "pylock.toml",
+        "pylock*.toml",
+        "pdm.lock",
         "uv.lock"
       ],
       rubygems: [
@@ -322,6 +352,7 @@ class Job < ApplicationRecord
       ],
       vcpkg: [
         "vcpkg.json",
+        "_generated-vcpkg-list.json"
       ],
     }
   end

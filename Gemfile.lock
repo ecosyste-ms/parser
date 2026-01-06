@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/ecosyste-ms/bibliothecary.git
-  revision: 827bda17dc8866d3f712d40942760f4d52e23b63
+  revision: f591866b2398af9fab378cf46dfcdaf2ffd2dec3
   specs:
-    ecosystems-bibliothecary (15.0.1)
+    ecosystems-bibliothecary (15.1.0)
       bundler
       csv
       json (~> 2.8)
@@ -351,7 +351,7 @@ CHECKSUMS
   dotenv (3.2.0) sha256=e375b83121ea7ca4ce20f214740076129ab8514cd81378161f11c03853fe619d
   dotenv-rails (3.2.0) sha256=657e25554ba622ffc95d8c4f1670286510f47f2edda9f68293c3f661b303beab
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
-  ecosystems-bibliothecary (15.0.1)
+  ecosystems-bibliothecary (15.1.0)
   erb (6.0.1) sha256=28ecdd99c5472aebd5674d6061e3c6b0a45c049578b071e5a52c2a7f13c197e5
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   ethon (0.15.0) sha256=0809805a035bc10f54162ca99f15ded49e428e0488bcfe1c08c821e18261a74d
@@ -450,7 +450,7 @@ CHECKSUMS
   zlib (3.2.2) sha256=908e61263f99c1371b5422581e2d6663bd37c6b04ae13b5f8cb10b0d09379f40
 
 RUBY VERSION
-   ruby 4.0.0p0
+  ruby 4.0.0
 
 BUNDLED WITH
-   2.7.2
+  4.0.3
