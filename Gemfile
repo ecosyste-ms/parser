@@ -27,7 +27,7 @@ gem "typhoeus"
 gem "redis"
 gem "sidekiq"
 gem 'sidekiq-status'
-gem "ecosystems-bibliothecary", github: 'ecosyste-ms/bibliothecary', require: 'bibliothecary'
+gem "ecosystems-bibliothecary", require: 'bibliothecary'
 gem "pghero"
 gem 'bootstrap'
 gem 'rack-cors'
