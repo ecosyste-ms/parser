@@ -51,6 +51,7 @@ GEM
     bootstrap-icons (1.0.15)
       nokogiri (~> 1)
     builder (3.3.0)
+    cgi (0.5.1)
     chronic_duration (0.10.6)
       numerizer (~> 0.1.1)
     concurrent-ruby (1.3.6)
@@ -221,7 +222,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    secure_headers (7.1.0)
+    secure_headers (7.2.0)
+      cgi (>= 0.1)
     securerandom (0.4.1)
     shoulda (4.0.0)
       shoulda-context (~> 2.0)
@@ -338,6 +340,7 @@ CHECKSUMS
   bootstrap (5.3.8) sha256=1c23b06df24ec28a0058ad90a0da93e260d2c0a5c453d7087f6bad428464742f
   bootstrap-icons (1.0.15) sha256=4a19c2360f88263c1606235813b8575ff3d6c0773174ed4ceb368628e5541ae9
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
+  cgi (0.5.1) sha256=e93fcafc69b8a934fe1e6146121fa35430efa8b4a4047c4893764067036f18e9
   chronic_duration (0.10.6) sha256=fac58d4147d3183a40811400380cafcef049f2bb02421d2fd1c6e685fbe8facc
   concurrent-ruby (1.3.6) sha256=6b56837e1e7e5292f9864f34b69c5a2cbc75c0cf5338f1ce9903d10fa762d5ab
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
@@ -423,7 +426,7 @@ CHECKSUMS
   ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
   sassc (2.4.0) sha256=4c60a2b0a3b36685c83b80d5789401c2f678c1652e3288315a1551d811d9f83e
   sassc-rails (2.1.2) sha256=5f4fdf3881fc9bdc8e856ffbd9850d70a2878866feae8114aa45996179952db5
-  secure_headers (7.1.0) sha256=6b1f9d5f9507af2948f4636452c41c09371927836396c2185438ffdf0a731124
+  secure_headers (7.2.0) sha256=713b3d20af12b8c6633d97e276b286f1520e57be0d84b00f3bf43d22a1b70f83
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   shoulda (4.0.0) sha256=e677218c432eaa102a173e7047fbcf396ebc8ccea467725ba4e6053bc9e09c0a
   shoulda-context (2.0.0) sha256=7adf45342cd800f507d2a053658cb1cce2884b616b26004d39684b912ea32c34
