@@ -146,7 +146,7 @@ GEM
       racc (~> 1.4)
     numerizer (0.1.1)
     ostruct (0.6.3)
-    ox (2.14.23)
+    ox (2.14.24)
       bigdecimal (>= 3.0)
     pg (1.6.3)
     pg (1.6.3-aarch64-linux-musl)
@@ -393,7 +393,7 @@ CHECKSUMS
   nokogiri (1.19.2-x86_64-linux-musl) sha256=93128448e61a9383a30baef041bf1f5817e22f297a1d400521e90294445069a8
   numerizer (0.1.1) sha256=10ec9efec62472b69a3a0e275a18a44baa595ce6e2e4cfc1678d5cb2974c336f
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
-  ox (2.14.23) sha256=4a9aedb4d6c78c5ebac1d7287dc7cc6808e14a8831d7adb727438f6a1b461b66
+  ox (2.14.24) sha256=ac5bc1d1ef590c2681c21ff6999acf96d94c14be500da4c6c7ba9576f104b500
   pg (1.6.3) sha256=1388d0563e13d2758c1089e35e973a3249e955c659592d10e5b77c468f628a99
   pg (1.6.3-aarch64-linux-musl) sha256=06a75f4ea04b05140146f2a10550b8e0d9f006a79cdaf8b5b130cde40e3ecc2c
   pg (1.6.3-arm64-darwin) sha256=7240330b572e6355d7c75a7de535edb5dfcbd6295d9c7777df4d9dddfb8c0e5f
