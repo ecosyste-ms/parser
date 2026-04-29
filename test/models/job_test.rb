@@ -97,6 +97,35 @@ class JobTest < ActiveSupport::TestCase
     end
   end
 
+  test 'download_file rejects oversized content length' do
+    stub_request(:get, "https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip")
+      .to_return({ status: 200, body: 'too large', headers: { 'Content-Length' => (Job::MAX_DOWNLOAD_SIZE + 1).to_s } })
+
+    Dir.mktmpdir do |dir|
+      error = assert_raises(RuntimeError) { @job.download_file(dir) }
+      assert_match 'download too large', error.message
+    end
+  end
+
+  test 'download_file rejects oversized streamed body' do
+    stub_request(:get, "https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip")
+      .to_return({ status: 200, body: 'a' * (Job::MAX_DOWNLOAD_SIZE + 1) })
+
+    Dir.mktmpdir do |dir|
+      error = assert_raises(RuntimeError) { @job.download_file(dir) }
+      assert_match 'download too large', error.message
+    end
+  end
+
+  test 'enforce_extracted_size! rejects oversized extracted archives' do
+    Dir.mktmpdir do |dir|
+      File.write(File.join(dir, 'large-file'), 'a' * (Job::MAX_EXTRACTED_SIZE + 1))
+
+      error = assert_raises(RuntimeError) { @job.enforce_extracted_size!(dir) }
+      assert_match 'extracted archive too large', error.message
+    end
+  end
+
   context 'fast_parse?' do
     should 'quickly parse a json file' do
       @job.url = 'https://raw.githubusercontent.com/ecosyste-ms/digest/main/package.json'
