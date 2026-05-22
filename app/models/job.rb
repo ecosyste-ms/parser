@@ -1,4 +1,7 @@
 class Job < ApplicationRecord
+  MAX_DOWNLOAD_SIZE = ENV.fetch('MAX_DOWNLOAD_SIZE', 100.megabytes).to_i
+  MAX_EXTRACTED_SIZE = ENV.fetch('MAX_EXTRACTED_SIZE', 500.megabytes).to_i
+
   validates_presence_of :url
   validates_uniqueness_of :id
 
@@ -69,11 +72,15 @@ class Job < ApplicationRecord
     case mime_type(path)
     when "application/zip", "application/java-archive"
       destination = File.join([dir, 'zip'])
-      `mkdir #{destination} && bsdtar --strip-components=1 -xvf #{path} -C #{destination} > /dev/null 2>&1 `
+      FileUtils.mkdir_p(destination)
+      system('bsdtar', '--strip-components=1', '-xvf', path, '-C', destination, out: File::NULL, err: File::NULL)
+      enforce_extracted_size!(destination)
       results = Bibliothecary.analyse(destination)
     when "application/gzip"
       destination = File.join([dir, 'tar'])
-      `mkdir #{destination} && tar xzf #{path} -C #{destination} --strip-components 1`
+      FileUtils.mkdir_p(destination)
+      system('tar', 'xzf', path, '-C', destination, '--strip-components', '1')
+      enforce_extracted_size!(destination)
       results = Bibliothecary.analyse(destination)
     when "text/plain", "application/json" # TODO there will be other mime types that need to be supported here
       results = Bibliothecary.analyse_file(basename, File.open(path).read)
@@ -124,16 +131,34 @@ class Job < ApplicationRecord
   def download_file(dir)
     path = working_directory(dir)
     downloaded_file = File.open(path, "wb")
+    downloaded_size = 0
 
     request = Typhoeus::Request.new(url, followlocation: true, timeout: 60)
     request.on_headers do |response|
       return nil unless [200,301,302].include? response.code
+      content_length = response.headers['Content-Length'].to_i
+      raise "download too large: #{content_length} bytes" if content_length > MAX_DOWNLOAD_SIZE
     end
-    request.on_body { |chunk| downloaded_file.write(chunk) }
+    request.on_body do |chunk|
+      downloaded_size += chunk.bytesize
+      raise "download too large: #{downloaded_size} bytes" if downloaded_size > MAX_DOWNLOAD_SIZE
+      downloaded_file.write(chunk)
+    end
     request.on_complete { downloaded_file.close }
     request.run
 
     return Digest::SHA256.hexdigest File.read(path)
+  ensure
+    downloaded_file&.close unless downloaded_file&.closed?
+  end
+
+  def enforce_extracted_size!(destination)
+    total_size = 0
+    Dir.glob(File.join(destination, '**', '*'), File::FNM_DOTMATCH).each do |path|
+      next if File.directory?(path)
+      total_size += File.size(path)
+      raise "extracted archive too large: #{total_size} bytes" if total_size > MAX_EXTRACTED_SIZE
+    end
   end
 
   def mime_type(path)
