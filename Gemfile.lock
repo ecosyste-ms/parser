@@ -246,8 +246,8 @@ GEM
       chronic_duration
       logger
       sidekiq (>= 7, < 9)
-    sprockets (4.2.2)
-      concurrent-ruby (~> 1.0)
+    sprockets (4.3.0)
+      concurrent-ruby (~> 1.1)
       logger
       rack (>= 2.2.4, < 4)
     sprockets-rails (3.5.2)
@@ -435,7 +435,7 @@ CHECKSUMS
   shoulda-matchers (4.5.1) sha256=8d06e2bbb5b22aa170333905fcf23b7388d1baa9485895b0a2b80210e97f27e2
   sidekiq (8.1.6) sha256=be20cd051124b1a16cf97ea9157137abbd30a515c16a5ae9312d2eadd045e40f
   sidekiq-status (4.0.0) sha256=3f45627efaa54c7f3e3b62dda358425af07fd7c596d6ab50d56ef3e45cbcdb67
-  sprockets (4.2.2) sha256=761e5a49f1c288704763f73139763564c845a8f856d52fba013458f8af1b59b1
+  sprockets (4.3.0) sha256=9e162c8332bab700384ae42a0d464c7a852135e5274f3cd064d7d9e515a9257f
   sprockets-rails (3.5.2) sha256=a9e88e6ce9f8c912d349aa5401509165ec42326baf9e942a85de4b76dbc4119e
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
   tilt (2.8.0) sha256=ba472eb2716fe1e04112d6d219a9dae938ec09a6a1e2ad3ecc7922e79bde3721
