@@ -304,6 +304,7 @@ DEPENDENCIES
   faraday-net_http_persistent
   faraday-retry
   jbuilder
+  json (< 3)
   minitest (~> 6.0)
   mocha
   nokogiri
