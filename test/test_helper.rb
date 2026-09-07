@@ -5,8 +5,7 @@ require "rails/test_help"
 require 'webmock/minitest'
 require 'mocha/minitest'
 
-require 'sidekiq/testing'
-Sidekiq::Testing.fake!
+Sidekiq.testing!(:fake)
 
 class ActiveSupport::TestCase
   Shoulda::Matchers.configure do |config|
