@@ -5,7 +5,6 @@ ruby '4.0.7'
 
 gem "railties", "~> 8.1.1"
 gem "activesupport", "~> 8.1.1"
-gem "json", "< 3" # rails/rails#58601
 gem "activemodel", "~> 8.1.1"
 gem "activerecord", "~> 8.1.1"
 gem "actionpack", "~> 8.1.1"
