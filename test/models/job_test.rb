@@ -31,7 +31,7 @@ class JobTest < ActiveSupport::TestCase
           :ecosystem=>"docker",
           :path=>"Dockerfile",
           :dependencies=>
-            [{:name=>"node", :requirement=>"18.0.0-alpine", :type=>"build"}],
+            [{:name=>"node", :requirement=>"18.0.0-alpine", :type=>"runtime"}],
           :kind=>"manifest",
           :success=>true,
           :related_paths=>[]
@@ -80,7 +80,7 @@ class JobTest < ActiveSupport::TestCase
           {:name=>"io.grpc:grpc-protobuf", :requirement=>"1.47.0", :type=>"runtime"},
           {:name=>"io.grpc:grpc-stub", :requirement=>"1.47.0", :type=>"runtime"},
           {:name=>"io.envoyproxy.protoc-gen-validate:pgv-java-stub", :requirement=>"0.6.7", :type=>"runtime"},
-          {:name=>"org.vdaas.vald:vald-client-java", :requirement=>"1.5.6", :type=>"runtime"}],
+          {:name=>"org.vdaas.vald:vald-client-java", :requirement=>"1.5.6", :type=>"runtime"}].sort_by { |dependency| dependency[:name] },
         :kind=>"manifest",
         :success=>true,
         :related_paths=>[]}
@@ -111,6 +111,15 @@ class JobTest < ActiveSupport::TestCase
     should 'not quickly parse a zip file' do
       @job.url = 'https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip'
       refute @job.fast_parse?
+    end
+  end
+
+  test 'advertised formats are recognized by the parser' do
+    Job.formats.each_value do |patterns|
+      patterns.each do |pattern|
+        filename = pattern.gsub('*', 'example')
+        assert ManifestParser.identify(filename), "Unrecognized format: #{pattern}"
+      end
     end
   end
 

@@ -66,13 +66,6 @@ GEM
       dotenv (= 3.2.0)
       railties (>= 6.1)
     drb (2.2.3)
-    ecosystems-bibliothecary (15.4.0)
-      bundler
-      csv
-      json (~> 2.8)
-      ox (>= 2.8.1)
-      racc
-      tomlrb (~> 2.0)
     erb (6.0.7)
     erubi (1.13.1)
     ethon (0.18.0)
@@ -150,8 +143,6 @@ GEM
       racc (~> 1.4)
     numerizer (0.1.1)
     ostruct (0.6.3)
-    ox (2.14.29)
-      bigdecimal (>= 3.0)
     pg (1.7.0)
     pg (1.7.0-aarch64-linux-musl)
     pg (1.7.0-arm64-darwin)
@@ -262,7 +253,6 @@ GEM
     thor (1.5.0)
     tilt (2.9.0)
     timeout (0.6.1)
-    tomlrb (2.0.4)
     tsort (0.2.0)
     typhoeus (1.6.0)
       ethon (>= 0.18.0)
@@ -301,7 +291,6 @@ DEPENDENCIES
   bootstrap-icons
   csv
   dotenv-rails (~> 3.2)
-  ecosystems-bibliothecary
   faraday
   faraday-follow_redirects
   faraday-gzip
@@ -358,7 +347,6 @@ CHECKSUMS
   dotenv (3.2.0) sha256=e375b83121ea7ca4ce20f214740076129ab8514cd81378161f11c03853fe619d
   dotenv-rails (3.2.0) sha256=657e25554ba622ffc95d8c4f1670286510f47f2edda9f68293c3f661b303beab
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
-  ecosystems-bibliothecary (15.4.0) sha256=d664d332b689a6250335b6e1a6e606e5909b045a5d27f4f8aa1b4d54b4e5bbf8
   erb (6.0.7) sha256=c5ca6dc25b0ef974a44dc8f59fe847577122483b1968a38dec305c60bf91ee92
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   ethon (0.18.0) sha256=b598afc9f30448cb068b850714b7d6948e941476095d04f90a4ac65b8d6efcb2
@@ -401,7 +389,6 @@ CHECKSUMS
   nokogiri (1.19.4-x86_64-linux-musl) sha256=17dfb7c1fa194ae02fbf7c51a7afc8d278045ab3fdacfd86f91d02d7b274470b
   numerizer (0.1.1) sha256=10ec9efec62472b69a3a0e275a18a44baa595ce6e2e4cfc1678d5cb2974c336f
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
-  ox (2.14.29) sha256=206736d5a8dade9dca10cf72022bc157ad6ca3eecaba3853918426ed88e12dc2
   pg (1.7.0) sha256=f7b536501284e883d4c9ef86dbde0313063e4aaafc23575b0017b0d572a26afb
   pg (1.7.0-aarch64-linux-musl) sha256=5ca4d4619a1a39fb22de47350130956ece69cf0512858ee68dca926e46f65e4a
   pg (1.7.0-arm64-darwin) sha256=9fa895bbe28bdd579b83ccc80464c01d1015ea7549a7919134c9f8f10c060e4b
@@ -448,7 +435,6 @@ CHECKSUMS
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
   tilt (2.9.0) sha256=da5735d0280bba96e9a91041bb14aee435ccad5c17b0fa519249ae543d9aa3a5
   timeout (0.6.1) sha256=78f57368a7e7bbadec56971f78a3f5ecbcfb59b7fcbb0a3ed6ddc08a5094accb
-  tomlrb (2.0.4) sha256=262f77947ac3ac9b3366a0a5940ecd238300c553e2e14f22009e2afcd2181b99
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
   typhoeus (1.6.0) sha256=bacc41c23e379547e29801dc235cd1699b70b955a1ba3d32b2b877aa844c331d
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
