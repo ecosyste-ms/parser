@@ -12,6 +12,7 @@ The project uses ruby on rails which have a number of system dependencies you'll
 - [postgresql 14](https://www.postgresql.org/download/)
 - [redis 6+](https://redis.io/download/)
 - [node.js 16+](https://nodejs.org/en/download/)
+- Go, using the minimum version in `go.mod`
 
 You will then need to set some configuration environment variables. Copy `env.example` to `.env.development` and customise the values to suit your local setup.
 
@@ -21,6 +22,14 @@ Once you've got all of those installed, from the root directory of the project r
 bin/setup
 bin/dev
 ```
+
+`bin/setup` builds the Go parser into `tmp/manifest-parser`. After changing its Go source, rebuild it with:
+
+```
+go build -mod=readonly -o tmp/manifest-parser ./cmd/manifest-parser
+```
+
+Set `MANIFEST_PARSER_COMMAND` to use a binary at another path. Docker builds and installs the command automatically.
 
 You can then load up [http://localhost:3000](http://localhost:3000) to access the service.
 
@@ -44,7 +53,22 @@ The applications tests can be found in [test](test) and use the testing framewor
 
 You can run all the tests with:
 
-`rails test`
+```
+go test -mod=readonly ./...
+go build -mod=readonly -o tmp/manifest-parser ./cmd/manifest-parser
+rails test
+```
+
+The Rails integration tests invoke the compiled command. `-mod=readonly` prevents Go from treating the Rails `vendor` directory as vendored Go dependencies.
+
+To inspect the command's JSON output directly:
+
+```
+tmp/manifest-parser -strip-components 1 test/fixtures/files/main.zip
+tmp/manifest-parser Gemfile
+```
+
+The v1 adapter keeps the existing ecosystem names and response fields, including `go.sum` as a lockfile. Archive paths retain v1's removal of the first path component. Dependency scopes and supported formats come from the Go parser; unsupported formats are omitted from the advertised list. npm workspace-link metadata depends on the upstream fix in [manifests issue 114](https://github.com/git-pkgs/manifests/issues/114).
 
 ## Background tasks
 
