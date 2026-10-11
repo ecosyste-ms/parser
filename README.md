@@ -4,7 +4,7 @@ An open API service to parse dependency metadata from many open source software 
 
 This project is part of [Ecosyste.ms](https://ecosyste.ms): Tools and open datasets to support, sustain, and secure critical digital infrastructure.
 
-It uses [Bibliothecary](https://github.com/ecosyste-ms/bibliothecary) library to parse the manifest files.
+It uses [git-pkgs/manifests](https://github.com/git-pkgs/manifests) to parse dependencies and [git-pkgs/archives](https://github.com/git-pkgs/archives) to read archives. Rails invokes a Go command and returns the existing v1 job response format.
 
 ## API
 

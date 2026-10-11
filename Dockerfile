@@ -1,4 +1,16 @@
+FROM golang:1.27-alpine AS parser
+
+WORKDIR /src
+COPY go.mod go.sum ./
+RUN go mod download
+COPY cmd ./cmd
+COPY internal ./internal
+RUN CGO_ENABLED=0 go build -trimpath -o /manifest-parser ./cmd/manifest-parser
+
 FROM ruby:4.0.7-alpine
+
+COPY --from=parser /manifest-parser /usr/local/bin/manifest-parser
+ENV MANIFEST_PARSER_COMMAND=/usr/local/bin/manifest-parser
 
 ENV APP_ROOT=/usr/src/app
 ENV DATABASE_PORT=5432
@@ -21,7 +33,6 @@ RUN apk add --update \
     tzdata \
     curl-dev \
     libc6-compat \
-    libarchive-tools \
     yaml-dev \
     libffi-dev \
     bash \

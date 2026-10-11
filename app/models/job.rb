@@ -40,8 +40,7 @@ class Job < ApplicationRecord
   end
 
   def fast_parse?
-    # TODO check size (head request)
-    return true if single_parsable_file? 
+    single_parsable_file?
   end
 
   def perform_dependency_parsing
@@ -52,9 +51,7 @@ class Job < ApplicationRecord
         if existing_job = Job.find_by(sha256: sha256, status: 'complete')
           results = existing_job.results
         else
-          Timeout::timeout(5.minutes) do
-            results = parse_dependencies(dir)
-          end
+          results = parse_dependencies(dir)
         end
         update!(results: results, status: 'complete', sha256: sha256)
       end
@@ -64,61 +61,7 @@ class Job < ApplicationRecord
   end
 
   def parse_dependencies(dir)
-    path = working_directory(dir)
-
-    case mime_type(path)
-    when "application/zip", "application/java-archive"
-      destination = File.join([dir, 'zip'])
-      `mkdir #{destination} && bsdtar --strip-components=1 -xvf #{path} -C #{destination} > /dev/null 2>&1 `
-      results = Bibliothecary.analyse(destination)
-    when "application/gzip"
-      destination = File.join([dir, 'tar'])
-      `mkdir #{destination} && tar xzf #{path} -C #{destination} --strip-components 1`
-      results = Bibliothecary.analyse(destination)
-    when "text/plain", "application/json" # TODO there will be other mime types that need to be supported here
-      results = Bibliothecary.analyse_file(basename, File.open(path).read)
-    else
-      results = []
-    end
-
-    return { manifests: results.map{|m| normalize_manifest(m) }}
-  end
-
-  def normalize_manifest(manifest)
-    manifest_hash = manifest.is_a?(Hash) ? manifest.dup : manifest.to_h
-    manifest_hash.transform_keys!{ |key| key == :platform ? :ecosystem : key }
-
-    dependencies = manifest_hash[:dependencies]
-    if dependencies.is_a?(Array)
-      dependencies = dependencies.map do |dep|
-        if dep.is_a?(Bibliothecary::Dependency)
-          dependency_to_hash(dep)
-        else
-          dep
-        end
-      end
-    end
-
-    {
-      ecosystem: manifest_hash[:ecosystem],
-      path: manifest_hash[:path],
-      dependencies: dependencies,
-      kind: manifest_hash[:kind],
-      success: manifest_hash[:success],
-      related_paths: manifest_hash[:related_paths]
-    }
-  end
-
-  def dependency_to_hash(dep)
-    hash = {
-      name: dep.name,
-      requirement: dep.requirement,
-      type: dep.type || "runtime"
-    }
-
-    hash[:local] = dep.local unless dep.local.nil?
-
-    hash
+    ManifestParser.parse(working_directory(dir))
   end
 
   def download_file(dir)
@@ -136,15 +79,8 @@ class Job < ApplicationRecord
     return Digest::SHA256.hexdigest File.read(path)
   end
 
-  def mime_type(path)
-    IO.popen(
-      ["file", "--brief", "--mime-type", path],
-      in: :close, err: :close
-    ) { |io| io.read.chomp }
-  end
-
   def single_parsable_file?
-    Bibliothecary.identify_manifests([basename]).any?
+    ManifestParser.identify(basename)
   end
 
   def working_directory(dir)
@@ -158,13 +94,8 @@ class Job < ApplicationRecord
   def self.formats
     {
       actions: [
-        "action.yml",
-        "action.yaml",
         ".github/workflows/*.yml",
         ".github/workflows/*.yaml",
-      ],
-      bentoml: [
-        "bentofile.yaml"
       ],
       bower: [
         "bower.json"
@@ -184,11 +115,7 @@ class Job < ApplicationRecord
       cocoapods: [
         "Podfile",
         "Podfile.lock",
-        "*.podspec",
-        "*.podspec.json"
-      ],
-      cog: [
-        "cog.yaml"
+        "*.podspec"
       ],
       conan: [
         "conanfile.txt",
@@ -207,28 +134,17 @@ class Job < ApplicationRecord
         "DESCRIPTION",
         "renv.lock"
       ],
-      cyclonedx: [
-        "cyclonedx.xml",
-        "cyclonedx.json",
-        "*.cdx.xml",
-        "*.cdx.json"
-      ],
       docker: [
         "Dockerfile",
-        "docker-compose*.yml",
-        "docker-compose*.yaml",
+        "docker-compose.yml",
+        "docker-compose.yaml",
       ],
       dub: [
         "dub.json",
         "dub.sdl"
       ],
-      dvc: [
-        "dvc.yaml"
-      ],
       elm: [
-        "elm-package.json",
-        "elm_dependencies.json",
-        "elm-stuff/exact-dependencies.json"
+        "elm-package.json"
       ],
       go: [
         "glide.yaml",
@@ -272,17 +188,8 @@ class Job < ApplicationRecord
         "build.gradle.kts",
         "gradle-dependencies-q.txt",
         "maven-resolved-dependencies.txt",
-        "sbt-update-full.txt",
-        "maven-dependency-tree.txt",
-        "maven-dependency-tree.dot",
         "gradle.lockfile",
         "verification-metadata.xml"
-      ],
-      meteor: [
-        "versions.json"
-      ],
-      mlflow: [
-        "MLmodel"
       ],
       nimble: [
         "*.nimble"
@@ -307,9 +214,6 @@ class Job < ApplicationRecord
         "project.assets.json",
         "*.deps.json"
       ],
-      ollama: [
-        "Modelfile"
-      ],
       packagist: [
         "composer.json",
         "composer.lock"
@@ -320,10 +224,8 @@ class Job < ApplicationRecord
       ],
       pypi: [
         "setup.py",
-        "req*.txt",
-        "req*.pip",
+        "*requirements*.txt",
         "requirements/*.txt",
-        "requirements/*.pip",
         "requirements.frozen",
         "pip-resolved-dependencies.txt",
         "pip-dependency-graph.json",
@@ -331,7 +233,7 @@ class Job < ApplicationRecord
         "Pipfile.lock",
         "pyproject.toml",
         "poetry.lock",
-        "pylock*.toml",
+        "pylock.toml",
         "pdm.lock",
         "uv.lock"
       ],
@@ -351,8 +253,7 @@ class Job < ApplicationRecord
         "Package.resolved"
       ],
       vcpkg: [
-        "vcpkg.json",
-        "_generated-vcpkg-list.json"
+        "vcpkg.json"
       ],
     }
   end
