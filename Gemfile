@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '4.0.9'
+ruby '4.0.10'
 
 gem "railties", "~> 8.1.1"
 gem "activesupport", "~> 8.1.1"
