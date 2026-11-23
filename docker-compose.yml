@@ -13,10 +13,30 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=development
       - DATABASE_HOST=database.service.parser.internal
+      - POSTGRES_HOST=database.service.parser.internal
+      - REDIS_URL=redis://redis.service.parser.internal:6379
     networks:
       - internal
     depends_on:
       - database.service.parser.internal
+      - redis.service.parser.internal
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    environment:
+      - RAILS_ENV=development
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=development
+      - POSTGRES_HOST=database.service.parser.internal
+      - REDIS_URL=redis://redis.service.parser.internal:6379
+    networks:
+      - internal
+    depends_on:
+      - app
+      - redis.service.parser.internal
 
   database.service.parser.internal:
     image: postgres:14.1-alpine
@@ -28,7 +48,7 @@ services:
       - POSTGRES_PASSWORD=development
 
   redis.service.parser.internal:
-    image: redis:6.2-alpine
+    image: redis:7-alpine
     networks:
       - internal
 
