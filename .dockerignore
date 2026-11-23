@@ -10,6 +10,7 @@ vendor
 coverage/
 .bundle
 .ruby-version
+config/master.key
 
 .DS_Store
 .AppleDouble
