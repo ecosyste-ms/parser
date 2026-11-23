@@ -1,4 +1,9 @@
 class Job < ApplicationRecord
+  class ExtractError < StandardError; end
+
+  ARCHIVE_MIME_TYPES = ["application/zip", "application/java-archive", "application/gzip"]
+  MAX_EXTRACTED_SIZE = 1.gigabyte
+
   validates_presence_of :url
   validates_uniqueness_of :id
 
@@ -67,13 +72,9 @@ class Job < ApplicationRecord
     path = working_directory(dir)
 
     case mime_type(path)
-    when "application/zip", "application/java-archive"
-      destination = File.join([dir, 'zip'])
-      `mkdir #{destination} && bsdtar --strip-components=1 -xvf #{path} -C #{destination} > /dev/null 2>&1 `
-      results = Bibliothecary.analyse(destination)
-    when "application/gzip"
-      destination = File.join([dir, 'tar'])
-      `mkdir #{destination} && tar xzf #{path} -C #{destination} --strip-components 1`
+    when *ARCHIVE_MIME_TYPES
+      destination = File.join([dir, 'archive'])
+      extract_archive(path, destination)
       results = Bibliothecary.analyse(destination)
     when "text/plain", "application/json" # TODO there will be other mime types that need to be supported here
       results = Bibliothecary.analyse_file(basename, File.open(path).read)
@@ -82,6 +83,34 @@ class Job < ApplicationRecord
     end
 
     return { manifests: results.map{|m| normalize_manifest(m) }}
+  end
+
+  # Re-streams the archive as uncompressed tar so the unpacked size can be
+  # counted before it reaches disk; rlimit_fsize covers sparse entries.
+  def extract_archive(path, destination)
+    FileUtils.mkdir(destination)
+    extracted = 0
+
+    IO.popen(["bsdtar", "-cf", "-", "@#{path}"], "rb", err: File::NULL) do |source|
+      IO.popen(["bsdtar", "--strip-components=1", "-xf", "-", "-C", destination], "wb", err: File::NULL, rlimit_fsize: MAX_EXTRACTED_SIZE) do |sink|
+        while (chunk = source.read(1.megabyte))
+          extracted += chunk.bytesize
+          break if extracted > MAX_EXTRACTED_SIZE
+          sink.write(chunk)
+        end
+      rescue Errno::EPIPE
+        # extractor exited early; its exit status is checked below
+      end
+      raise ExtractError, "archive contains a file larger than #{MAX_EXTRACTED_SIZE} bytes" if $?.signaled?
+    end
+
+    raise ExtractError, "archive unpacks to more than #{MAX_EXTRACTED_SIZE} bytes" if extracted > MAX_EXTRACTED_SIZE
+
+    # symlinks could point the parser at files outside the archive
+    Dir.glob("**/*", File::FNM_DOTMATCH, base: destination).each do |entry|
+      entry = File.join(destination, entry)
+      File.delete(entry) if File.symlink?(entry)
+    end
   end
 
   def normalize_manifest(manifest)
@@ -148,7 +177,8 @@ class Job < ApplicationRecord
   end
 
   def working_directory(dir)
-    File.join([dir, basename])
+    # fixed name: the URL basename is attacker-controlled
+    File.join([dir, "download"])
   end
 
   def basename

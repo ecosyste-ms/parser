@@ -1,4 +1,5 @@
 require "test_helper"
+require "rubygems/package"
 
 class JobTest < ActiveSupport::TestCase
   context 'validations' do
@@ -23,7 +24,7 @@ class JobTest < ActiveSupport::TestCase
 
   test 'parse_dependencies' do
     Dir.mktmpdir do |dir|
-      FileUtils.cp(File.join(file_fixture_path, 'main.zip'), dir)
+      FileUtils.cp(File.join(file_fixture_path, 'main.zip'), @job.working_directory(dir))
       results = @job.parse_dependencies(dir)
 
       assert_equal results[:manifests], [
@@ -68,7 +69,7 @@ class JobTest < ActiveSupport::TestCase
     @job = Job.create(url: 'https://repo.clojars.org/vald-client-clj/vald-client-clj/v1.5.6/vald-client-clj-v1.5.6.jar', sidekiq_id: '123', ip: '123.456.78.9')
 
     Dir.mktmpdir do |dir|
-      FileUtils.cp(File.join(file_fixture_path, 'vald-client-clj-v1.5.6.jar'), dir)
+      FileUtils.cp(File.join(file_fixture_path, 'vald-client-clj-v1.5.6.jar'), @job.working_directory(dir))
       results = @job.parse_dependencies(dir)
       
       assert_equal results[:manifests][1], {:ecosystem=>"maven",
@@ -95,6 +96,65 @@ class JobTest < ActiveSupport::TestCase
       sha256 = @job.download_file(dir)
       assert_equal sha256, '826d05d1869c3aa66dce47e6f79fc6800f72d34b706adba1eecd0d2d5e98e17b'
     end
+  end
+
+  context 'extraction limit' do
+    should 'refuse archives that unpack past the limit' do
+      [file_fixture('main.zip').binread, ActiveSupport::Gzip.compress(tar_with('pkg/package.json' => '{}', 'pkg/big' => "\0" * 5.megabytes))].each do |body|
+        job = Job.create(url: 'https://example.com/archive')
+        stub_request(:get, job.url).to_return(status: 200, body: body)
+        with_limit(:MAX_EXTRACTED_SIZE, 20.kilobytes) { job.perform_dependency_parsing }
+        assert_equal 'error', job.status
+        assert_match 'Job::ExtractError', job.results['error']
+      end
+    end
+
+    should 'extract gzipped tarballs under the limit' do
+      job = Job.create(url: 'https://example.com/pkg.tgz')
+      stub_request(:get, job.url).to_return(status: 200, body: ActiveSupport::Gzip.compress(tar_with('pkg/package.json' => '{"dependencies":{"left-pad":"1.0.0"}}')))
+      job.perform_dependency_parsing
+      assert_equal 'complete', job.status
+      assert_equal ['package.json'], job.results['manifests'].map { |m| m['path'] }
+    end
+  end
+
+  should 'not parse through symlinks in an archive' do
+    Tempfile.create(['outside', '.json']) do |outside|
+      outside.write('{"dependencies":{"outside-secret":"1.0.0"}}')
+      outside.flush
+
+      io = StringIO.new
+      Gem::Package::TarWriter.new(io) do |tar|
+        tar.add_symlink('pkg/package.json', outside.path, 0644)
+        tar.add_symlink('pkg/linked', File.dirname(outside.path), 0755)
+        tar.add_file_simple('pkg/Gemfile', 0644, 10) { |f| f.write("gem 'rake'") }
+      end
+
+      job = Job.create(url: 'https://example.com/pkg.tgz')
+      stub_request(:get, job.url).to_return(status: 200, body: ActiveSupport::Gzip.compress(io.string))
+      job.perform_dependency_parsing
+
+      assert_equal 'complete', job.status
+      assert_equal ['Gemfile'], job.results['manifests'].map { |m| m['path'] }
+    end
+  end
+
+  def tar_with(files)
+    io = StringIO.new
+    Gem::Package::TarWriter.new(io) do |tar|
+      files.each { |name, content| tar.add_file_simple(name, 0644, content.bytesize) { |f| f.write(content) } }
+    end
+    io.string
+  end
+
+  def with_limit(name, bytes)
+    original = Job.const_get(name)
+    Job.send(:remove_const, name)
+    Job.const_set(name, bytes)
+    yield
+  ensure
+    Job.send(:remove_const, name)
+    Job.const_set(name, original)
   end
 
   context 'fast_parse?' do

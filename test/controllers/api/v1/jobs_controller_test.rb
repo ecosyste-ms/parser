@@ -1,10 +1,51 @@
 require 'test_helper'
+require 'rubygems/package'
 
 class ApiV1JobsControllerTest < ActionDispatch::IntegrationTest
   test 'submit a job' do
     post api_v1_jobs_path(url: 'https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip')
     assert_response :redirect
     assert_match /\/api\/v1\/jobs\//, @response.location
+  end
+
+  test 'shell metacharacters in a gzip url are not executed' do
+    assert_no_injection('pkg.tgz', gzipped_tarball('pkg/package.json' => '{"dependencies":{"left-pad":"1.0.0"}}')) do |job|
+      assert_equal ['left-pad'], job.results['manifests'].first['dependencies'].map { |d| d['name'] }
+    end
+  end
+
+  test 'shell metacharacters in a zip url are not executed' do
+    assert_no_injection('main.zip', file_fixture('main.zip').binread) do |job|
+      assert_includes job.results['manifests'].map { |m| m['path'] }, 'package.json'
+    end
+  end
+
+  def assert_no_injection(filename, body)
+    Dir.mktmpdir do |dir|
+      Dir.chdir(dir) do
+        stub_request(:get, /attacker\.test/).to_return(status: 200, body: body)
+
+        Sidekiq::Testing.inline! do
+          post api_v1_jobs_path, params: { url: "http://attacker.test/x/#{filename};touch$IFS'INJECTED';false" }
+        end
+        assert_response :redirect
+
+        refute File.exist?('INJECTED'), 'injected command ran'
+        job = Job.last
+        assert_equal 'complete', job.status
+        yield job
+      end
+    end
+  end
+
+  def gzipped_tarball(files)
+    io = StringIO.new
+    Zlib::GzipWriter.wrap(io) do |gz|
+      Gem::Package::TarWriter.new(gz) do |tar|
+        files.each { |name, content| tar.add_file_simple(name, 0644, content.bytesize) { |f| f.write(content) } }
+      end
+    end
+    io.string
   end
 
   test 'submit an invalid job' do
