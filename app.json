@@ -1,7 +1,7 @@
 {
   "cron": [
     {
-      "command": "bundle exec rake jobs:check_statuses",
+      "command": "bundle exec rake jobs:check_status",
       "schedule": "*/10 * * * *"
     },
     {
