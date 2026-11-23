@@ -5,6 +5,7 @@ class Job < ApplicationRecord
 
   class ExtractError < StandardError; end
 
+  FINISHED_STATUSES = ["complete", "error"]
   ARCHIVE_MIME_TYPES = ["application/zip", "application/java-archive", "application/gzip"]
   DOWNLOAD_TIMEOUT = 60
   INLINE_TIMEOUT = 10
@@ -35,7 +36,11 @@ class Job < ApplicationRecord
   def check_status
     return if sidekiq_id.blank?
     return if finished?
-    update(status: fetch_status)
+    # conditional so a stale record cannot replace the status the worker has since written
+    Job.where(id: id)
+       .where("status IS NULL OR status NOT IN (?)", FINISHED_STATUSES)
+       .update_all(status: fetch_status.to_s, updated_at: Time.current)
+    reload
   end
 
   def fetch_status
@@ -43,7 +48,7 @@ class Job < ApplicationRecord
   end
 
   def finished?
-    ['complete', 'error'].include?(status)
+    FINISHED_STATUSES.include?(status)
   end
 
   def start_dependency_parsing

@@ -88,6 +88,19 @@ class ApiV1JobsControllerTest < ActionDispatch::IntegrationTest
     assert_equal actual_response["details"], ["Url can't be blank"]
   end
 
+  test 'shows the error status when the worker failed while the job was being loaded' do
+    job = Job.create(url: 'https://example.com/a.zip', status: 'working', sidekiq_id: '123')
+    stale = Job.find(job.id)
+    Job.where(id: job.id).update_all(status: 'error', results: { error: 'failed' })
+    Job.expects(:find).with(job.id).returns(stale)
+    Sidekiq::Status.stubs(:status).returns(:complete)
+
+    get api_v1_job_path(id: job.id)
+    assert_response :success
+    assert_equal 'error', JSON.parse(@response.body)['status']
+    assert_equal 'failed', JSON.parse(@response.body)['results']['error']
+  end
+
   test 'check on a job' do
     @job = Job.create(url: 'https://github.com/ecosyste-ms/digest/archive/refs/heads/main.zip')
 

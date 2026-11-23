@@ -17,6 +17,16 @@ class JobTest < ActiveSupport::TestCase
     assert_equal @job.status, "queued"
   end
 
+  test 'check_status does not replace a status the worker wrote after the record was loaded' do
+    stale = Job.find(@job.id)
+    Job.where(id: @job.id).update_all(status: 'error')
+    Sidekiq::Status.stubs(:status).returns(:complete)
+
+    stale.check_status
+    assert_equal 'error', stale.status
+    assert_equal 'error', @job.reload.status
+  end
+
   test 'parse_dependencies_async' do
     ParseDependenciesWorker.expects(:perform_async).with(@job.id)
     @job.parse_dependencies_async
