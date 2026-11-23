@@ -155,6 +155,21 @@ class JobTest < ActiveSupport::TestCase
   end
 
   context 'result reuse' do
+    should 'not reuse single file results across filenames' do
+      body = '{"dependencies":{"left-pad":"1.0.0"}}'
+      stub_request(:get, 'https://example.com/notes.txt').to_return(status: 200, body: body)
+      stub_request(:get, 'https://example.com/package.json').to_return(status: 200, body: body)
+
+      first = Job.create(url: 'https://example.com/notes.txt')
+      first.perform_dependency_parsing
+      assert_equal [], first.results['manifests']
+
+      second = Job.create(url: 'https://example.com/package.json')
+      second.perform_dependency_parsing
+      assert_equal first.sha256, second.sha256
+      assert_equal ['left-pad'], second.results['manifests'].first['dependencies'].map { |d| d['name'] }
+    end
+
     should 'mark failed downloads as errors' do
       stub_request(:get, @job.url).to_return(status: 404)
       @job.perform_dependency_parsing

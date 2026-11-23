@@ -66,8 +66,10 @@ class Job < ApplicationRecord
     begin
       Dir.mktmpdir do |dir|
         sha256 = download_file(dir)
+        archive = archive?(working_directory(dir))
 
-        if existing_job = Job.find_by(sha256: sha256, status: 'complete')
+        # single file results depend on the url's filename, so only archives are reused
+        if archive && (existing_job = Job.find_by(sha256: sha256, status: 'complete'))
           results = existing_job.results
         else
           Timeout::timeout(5.minutes) do
@@ -79,6 +81,10 @@ class Job < ApplicationRecord
     rescue => e
       update(results: {error: e.inspect}, status: 'error')
     end
+  end
+
+  def archive?(path)
+    ARCHIVE_MIME_TYPES.include?(mime_type(path))
   end
 
   def parse_dependencies(dir)
