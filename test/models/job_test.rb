@@ -98,6 +98,79 @@ class JobTest < ActiveSupport::TestCase
     end
   end
 
+  context 'download restrictions' do
+    should 'refuse loopback, private and metadata addresses' do
+      %w[http://127.0.0.1/a.zip http://10.0.0.5/a.zip http://169.254.169.254/latest http://[::1]/a.zip http://[::ffff:127.0.0.1]/a.zip].each do |url|
+        job = Job.create(url: url)
+        job.perform_dependency_parsing
+        assert_equal 'error', job.status, url
+        assert_match 'address not allowed', job.results['error'], url
+      end
+      assert_not_requested :get, /.*/
+    end
+
+    should 'refuse hostnames that resolve to a private address' do
+      @job.stubs(:resolve_host).returns(['93.184.216.34', '192.168.1.1'])
+      @job.perform_dependency_parsing
+      assert_equal 'error', @job.status
+      assert_not_requested :get, /.*/
+    end
+
+    should 'refuse non-http urls' do
+      job = Job.create(url: 'file:///etc/passwd')
+      job.perform_dependency_parsing
+      assert_equal 'error', job.status
+      assert_match 'unsupported url', job.results['error']
+    end
+
+    should 'refuse a redirect to a private address' do
+      stub_request(:get, @job.url).to_return(status: 302, headers: { 'Location' => 'http://169.254.169.254/latest/meta-data' })
+      @job.perform_dependency_parsing
+      assert_equal 'error', @job.status
+      assert_match 'address not allowed', @job.results['error']
+      assert_not_requested :get, /169\.254/
+    end
+
+    should 'follow a redirect to a public address' do
+      stub_request(:get, @job.url).to_return(status: 302, headers: { 'Location' => '/mirror/main.zip' })
+      stub_request(:get, 'https://github.com/mirror/main.zip').to_return(status: 200, body: file_fixture('main.zip'))
+      @job.perform_dependency_parsing
+      assert_equal 'complete', @job.status
+      assert_equal '826d05d1869c3aa66dce47e6f79fc6800f72d34b706adba1eecd0d2d5e98e17b', @job.sha256
+    end
+
+    should 'stop after too many redirects' do
+      stub_request(:get, @job.url).to_return(status: 302, headers: { 'Location' => @job.url })
+      @job.perform_dependency_parsing
+      assert_equal 'error', @job.status
+      assert_match 'too many redirects', @job.results['error']
+    end
+
+    should 'refuse downloads over the size limit' do
+      stub_request(:get, @job.url).to_return(status: 200, body: 'a' * 2048)
+      with_limit(:MAX_DOWNLOAD_SIZE, 1024) { @job.perform_dependency_parsing }
+      assert_equal 'error', @job.status
+      assert_match 'download larger than', @job.results['error']
+    end
+  end
+
+  context 'result reuse' do
+    should 'mark failed downloads as errors' do
+      stub_request(:get, @job.url).to_return(status: 404)
+      @job.perform_dependency_parsing
+      assert_equal 'error', @job.status
+      assert_match 'unexpected response 404', @job.results['error']
+      assert_nil @job.sha256
+    end
+
+    should 'mark timed out downloads as errors' do
+      stub_request(:get, @job.url).to_timeout
+      @job.perform_dependency_parsing
+      assert_equal 'error', @job.status
+      assert_match 'timed out', @job.results['error']
+    end
+  end
+
   context 'extraction limit' do
     should 'refuse archives that unpack past the limit' do
       [file_fixture('main.zip').binread, ActiveSupport::Gzip.compress(tar_with('pkg/package.json' => '{}', 'pkg/big' => "\0" * 5.megabytes))].each do |body|

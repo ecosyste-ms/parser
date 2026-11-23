@@ -1,8 +1,21 @@
 class Job < ApplicationRecord
+  class DownloadError < StandardError; end
+
+  class DownloadLimitError < DownloadError; end
+
   class ExtractError < StandardError; end
 
   ARCHIVE_MIME_TYPES = ["application/zip", "application/java-archive", "application/gzip"]
+  DOWNLOAD_TIMEOUT = 60
+  MAX_DOWNLOAD_SIZE = 250.megabytes
   MAX_EXTRACTED_SIZE = 1.gigabyte
+  MAX_REDIRECTS = 5
+  REDIRECT_CODES = [301, 302, 303, 307, 308]
+  DENIED_RANGES = %w[
+    0.0.0.0/8 10.0.0.0/8 100.64.0.0/10 127.0.0.0/8 169.254.0.0/16 172.16.0.0/12
+    192.0.0.0/24 192.168.0.0/16 198.18.0.0/15 224.0.0.0/4 240.0.0.0/4
+    ::/128 ::1/128 64:ff9b::/96 fc00::/7 fe80::/10 ff00::/8
+  ].map { |range| IPAddr.new(range) }
 
   validates_presence_of :url
   validates_uniqueness_of :id
@@ -150,19 +163,82 @@ class Job < ApplicationRecord
     hash
   end
 
-  def download_file(dir)
+  def download_file(dir, timeout: DOWNLOAD_TIMEOUT, max_size: MAX_DOWNLOAD_SIZE)
     path = working_directory(dir)
-    downloaded_file = File.open(path, "wb")
+    target = url
+    response = nil
+    deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + timeout
 
-    request = Typhoeus::Request.new(url, followlocation: true, timeout: 60)
-    request.on_headers do |response|
-      return nil unless [200,301,302].include? response.code
+    (MAX_REDIRECTS + 1).times do
+      remaining = deadline - Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      raise DownloadLimitError, "download timed out" if remaining <= 0
+      response = fetch(target, path, timeout: remaining, max_size: max_size)
+      raise DownloadLimitError, "download timed out" if response.timed_out?
+      break unless REDIRECT_CODES.include?(response.code)
+      location = response.headers && response.headers["Location"]
+      raise DownloadError, "redirect without a location" if location.blank?
+      target = URI.join(target, Array(location).last).to_s
     end
-    request.on_body { |chunk| downloaded_file.write(chunk) }
-    request.on_complete { downloaded_file.close }
-    request.run
 
-    return Digest::SHA256.hexdigest File.read(path)
+    raise DownloadError, "too many redirects" if REDIRECT_CODES.include?(response.code)
+    raise DownloadError, "unexpected response #{response.code}" unless response.code == 200
+
+    Digest::SHA256.file(path).hexdigest
+  end
+
+  # Redirects are followed by the caller so every hop gets the same checks.
+  def fetch(target, path, timeout:, max_size:)
+    uri = URI.parse(target)
+    raise DownloadError, "unsupported url" unless uri.is_a?(URI::HTTP) && uri.hostname.present?
+
+    options = { followlocation: false, timeout_ms: (timeout * 1000).ceil }
+    pinned = public_addresses(uri.hostname)
+    # pin the checked addresses so curl cannot re-resolve to a different one
+    resolve_list = Ethon::Curl.slist_append(nil, "#{uri.hostname}:#{uri.port}:#{pinned.join(',')}") if pinned
+    options[:resolve] = resolve_list if resolve_list
+
+    size = 0
+    response = File.open(path, "wb") do |file|
+      request = Typhoeus::Request.new(uri.to_s, options)
+      request.on_body do |chunk, streamed|
+        next unless streamed.code == 200
+        size += chunk.bytesize
+        next :abort if size > max_size
+        file.write(chunk)
+      end
+      request.run
+    end
+
+    raise DownloadLimitError, "download larger than #{max_size} bytes" if size > max_size
+    response
+  ensure
+    Ethon::Curl.slist_free_all(resolve_list) if resolve_list
+  end
+
+  # Returns the addresses to pin for a hostname, nil for an IP literal.
+  def public_addresses(host)
+    literal = begin
+      IPAddr.new(host)
+    rescue IPAddr::InvalidAddressError
+      nil
+    end
+
+    addresses = literal ? [literal.to_s] : resolve_host(host)
+    raise DownloadError, "could not resolve #{host}" if addresses.empty?
+    raise DownloadError, "address not allowed" if addresses.any? { |address| denied_address?(address) }
+
+    return nil if literal
+    addresses.map { |address| address.include?(":") ? "[#{address}]" : address }
+  end
+
+  def resolve_host(host)
+    Addrinfo.getaddrinfo(host, nil, nil, :STREAM).map(&:ip_address).uniq
+  end
+
+  def denied_address?(address)
+    ip = IPAddr.new(address.split("%").first)
+    ip = ip.native if ip.ipv4_mapped?
+    DENIED_RANGES.any? { |range| range.include?(ip) }
   end
 
   def mime_type(path)
