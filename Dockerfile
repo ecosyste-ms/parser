@@ -44,7 +44,7 @@ COPY . $APP_ROOT
 
 # Precompile assets for a production environment.
 # This is done to include assets in production images on Dockerhub.
-RUN RAILS_ENV=production bundle exec rake assets:precompile
+RUN RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 bundle exec rake assets:precompile
 
 # Startup
 CMD ["bin/docker-start"]
