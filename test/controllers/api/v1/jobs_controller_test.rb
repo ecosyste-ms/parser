@@ -20,6 +20,36 @@ class ApiV1JobsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'parses a small manifest inline' do
+    stub_request(:get, 'https://example.com/package.json').to_return(status: 200, body: '{"dependencies":{"left-pad":"1.0.0"}}')
+    assert_no_difference -> { ParseDependenciesWorker.jobs.size } do
+      post api_v1_jobs_path, params: { url: 'https://example.com/package.json' }
+    end
+
+    job = Job.last
+    assert_equal 'complete', job.status
+    assert_equal ['package.json'], job.results['manifests'].map { |m| m['path'] }
+  end
+
+  test 'hands inline downloads to the worker when they are archives, too large or too slow' do
+    responses = [
+      { status: 200, body: file_fixture('main.zip').binread },
+      { status: 200, body: 'a' * (Job::INLINE_MAX_SIZE + 1) },
+      :timeout
+    ]
+
+    responses.each_with_index do |response, index|
+      url = "https://example.com/#{index}/package.json"
+      stub = stub_request(:get, url)
+      response == :timeout ? stub.to_timeout : stub.to_return(response)
+
+      assert_difference -> { ParseDependenciesWorker.jobs.size }, 1 do
+        post api_v1_jobs_path, params: { url: url }
+      end
+      assert_equal 'pending', Job.find_by(url: url).status
+    end
+  end
+
   def assert_no_injection(filename, body)
     Dir.mktmpdir do |dir|
       Dir.chdir(dir) do

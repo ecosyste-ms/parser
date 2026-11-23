@@ -7,6 +7,8 @@ class Job < ApplicationRecord
 
   ARCHIVE_MIME_TYPES = ["application/zip", "application/java-archive", "application/gzip"]
   DOWNLOAD_TIMEOUT = 60
+  INLINE_TIMEOUT = 10
+  INLINE_MAX_SIZE = 10.megabytes
   MAX_DOWNLOAD_SIZE = 250.megabytes
   MAX_EXTRACTED_SIZE = 1.gigabyte
   MAX_REDIRECTS = 5
@@ -46,7 +48,7 @@ class Job < ApplicationRecord
 
   def start_dependency_parsing
     if fast_parse?
-      perform_dependency_parsing
+      perform_dependency_parsing(inline: true)
     else
       parse_dependencies_async
     end
@@ -62,11 +64,15 @@ class Job < ApplicationRecord
     return true if single_parsable_file? 
   end
 
-  def perform_dependency_parsing
+  # inline runs inside the web request, so anything slow, large or archived
+  # is handed to the worker instead.
+  def perform_dependency_parsing(inline: false)
     begin
       Dir.mktmpdir do |dir|
-        sha256 = download_file(dir)
+        limits = inline ? { timeout: INLINE_TIMEOUT, max_size: INLINE_MAX_SIZE } : {}
+        sha256 = download_file(dir, **limits)
         archive = archive?(working_directory(dir))
+        return parse_dependencies_async if inline && archive
 
         # single file results depend on the url's filename, so only archives are reused
         if archive && (existing_job = Job.find_by(sha256: sha256, status: 'complete'))
@@ -79,6 +85,7 @@ class Job < ApplicationRecord
         update!(results: results, status: 'complete', sha256: sha256)
       end
     rescue => e
+      return parse_dependencies_async if inline && e.is_a?(DownloadLimitError)
       update(results: {error: e.inspect}, status: 'error')
     end
   end
